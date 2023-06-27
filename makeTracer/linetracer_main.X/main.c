@@ -46,6 +46,96 @@
 /*
                          Main application
  */
+
+bool SWflag = false;
+uint16_t pwmr = 1023, pwml = 1023;
+
+void front(void){
+    SELR2_SetLow();
+    SELR1_SetHigh();
+    SELL2_SetLow();
+    SELL1_SetHigh();
+    
+    return;
+}
+
+void frontR(void){
+    front();
+    PWM3_LoadDutyValue(1023);
+    PWM4_LoadDutyValue(1023);
+    
+    SELR2_SetLow();
+    SELR1_SetLow();
+    SELL2_SetLow();
+    SELL1_SetHigh();
+    
+    return;
+}
+
+void frontL(void){
+    front();
+    PWM3_LoadDutyValue(1023);
+    PWM4_LoadDutyValue(1023);
+    
+    SELR2_SetLow();
+    SELR1_SetHigh();
+    SELL2_SetLow();
+    SELL1_SetLow();
+    
+    return;
+}
+
+void stop(void){
+    SELR2_SetLow();
+    SELR1_SetLow();
+    SELL2_SetLow();
+    SELL1_SetLow();
+    
+    return;
+}
+
+void breaks(void){
+    SELR2_SetHigh();
+    SELR1_SetHigh();
+    SELL2_SetHigh();
+    SELL1_SetHigh();
+    
+    return;
+}
+
+void buzz(){
+    for (uint8_t tone_n = 0; tone_n < 50; tone_n++){
+        BUZZ_SetHigh();
+        __delay_us(500);
+        BUZZ_SetLow();
+        __delay_us(500);
+    }
+}
+
+void readSW(void (*function)()){
+    if (SW_GetValue == 0 && !SWflag){
+        function;
+        SWflag = true;
+        __delay_ms(50);
+        break;
+    }else if (SW_GetValue() == 1){
+        SWflag = false;
+    }
+}
+
+void waitStart(void){
+    while(1){
+        if (SW_GetValue() == 0 && !SWflag){
+            buzz();
+            SWflag = true;
+            __delay_ms(100);
+            break;
+        }else if(SW_GetValue() == 1){
+            SWflag = false;
+        }
+    }
+}
+
 void main(void)
 {
     // initialize the device
@@ -68,7 +158,21 @@ void main(void)
 
     while (1)
     {
-        // Add your application code
+        waitStart();
+        PWM3_LoadDutyValue(1023);
+        PWM4_LoadDutyValue(1023);
+        front();
+        __delay_ms(100);
+        
+        while (SW_GetValue() == 1){
+            if (SENSR_GetValue() == 1 && SENSL_GetValue() == 1){
+                front();
+            }else if(SENSR_GetValue() == 1 && SENSL_GetValue() == 0){
+                frontR();
+            }else if(SENSR_GetValue() == 0 && SENSL_GetValue() == 1){
+                frontL();
+            }
+        }
     }
 }
 /**
