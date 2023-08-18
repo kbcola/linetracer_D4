@@ -1,21 +1,21 @@
  /**
-   PWM3 Generated Driver API Header File
+   CMP1 Generated Driver API Header File
  
    @Company
      Microchip Technology Inc. 
 
    @File Name
-    pwm3.h
+    cmp1.h
 
    @Summary
-     This is the generated header file for the PWM3 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+     This is the generated header file for the CMP1 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
  
    @Description
-     This header file provides APIs for driver for PWM3.
+     This header file provides APIs for driver for CMP1.
      Generation Information :
          Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
          Device            :  PIC16F1778
-         Driver Version    :  2.01
+         Driver Version    :  2.11
      The generated drivers are tested against the following:
          Compiler          :  XC8 2.36 and above or later
          MPLAB             :  MPLAB X 6.00
@@ -44,98 +44,103 @@
     SOFTWARE.
 */
 
-#ifndef PWM3_H
- #define PWM3_H
+#ifndef CMP1_H
+#define CMP1_H
  
  /**
    Section: Included Files
  */
 
- #include <xc.h>
- #include <stdint.h>
+#include <stdbool.h>
+#include <stdint.h>
 
- #ifdef __cplusplus  // Provide C++ Compatibility
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-     extern "C" {
+    extern "C" {
 
- #endif
+#endif
 
- /**
-   Section: Macro Declarations
- */
+/**
+  Section: CMP1 APIs
+*/
 
- #define PWM3_INITIALIZE_DUTY_VALUE    511
+/**
+  @Summary
+    Initializes the CMP1
 
- /**
-   Section: PWM Module APIs
- */
+  @Description
+    This routine initializes the CMP1.
+    This routine must be called before any other CMP1 routine is called.
+    This routine should only be called once during system initialization.
 
- /**
-   @Summary
-     Initializes the PWM3
+  @Preconditions
+    None
 
-   @Description
-     This routine initializes the EPWM3_Initialize
-     This routine must be called before any other PWM3 routine is called.
-     This routine should only be called once during system initialization.
+  @Param
+    None
 
-   @Preconditions
-     None
+  @Returns
+    None
 
-   @Param
-     None
-
-   @Returns
-     None
-
-   @Comment
-     
+  @Comment
 
   @Example
-     <code>
-     uint16_t dutycycle;
+    <code>
+    CMP1_Initialize();
+    </code>
+*/
+void CMP1_Initialize(void);
 
-     PWM3_Initialize();
-     PWM3_LoadDutyValue(dutycycle);
-     </code>
-  */
- void PWM3_Initialize(void);
+/**
+  @Summary
+    Gets the CMP1 output status.
 
- /**
-   @Summary
-     Loads 16-bit duty cycle.
+  @Description
+    This routine gets the CMP1 output status.
 
-   @Description
-     This routine loads the 16 bit duty cycle value.
+  @Preconditions
+    The CMP1 initializer routine should be called
+    prior to use this routine.
 
-   @Preconditions
-     PWM3_Initialize() function should have been called 
-         before calling this function.
+  @Param
+    None
 
-   @Param
-     Pass 16bit duty cycle value.
+  @Returns
+    high  - if the CMP1 output is high.
+    low   - if the CMP1 output is low.
 
-   @Returns
-     None
+  @Example
+    <code>
+    #define LED_On  LATAbits.LATA0=1
+    #define LED_Off LATAbits.LATA0=0
 
-   @Example
-     <code>
-     uint16_t dutycycle;
+    CMP1_Initialize();
 
-     PWM3_Initialize();
-     PWM3_LoadDutyValue(dutycycle);
-     </code>
- */
- void PWM3_LoadDutyValue(uint16_t dutyValue);
+    while(1)
+    {
+        if(CMP1_GetOutputStatus())
+        {
+            LED_On;
+        }
+        else
+        {
+             LED_Off;
+        }
+    }
+    </code>
+*/
+bool CMP1_GetOutputStatus(void);
 
- 
- #ifdef __cplusplus  // Provide C++ Compatibility
 
-     }
 
- #endif
+#ifdef __cplusplus  // Provide C++ Compatibility
 
- #endif	//PWM3_H
- /**
-  End of File
- */
+    }
+
+#endif
+
+#endif // CMP1_H
+/**
+ End of File
+*/
+

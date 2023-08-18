@@ -1,21 +1,21 @@
  /**
-   PWM3 Generated Driver File
+   CMP1 Generated Driver File
  
    @Company
      Microchip Technology Inc.
  
    @File Name
-     pwm3.c
+     cmp1.c
  
    @Summary
-     This is the generated driver implementation file for the PWM3 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+     This is the generated driver implementation file for the CMP1 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
  
    @Description
-     This source file provides implementations for driver APIs for PWM3.
+     This source file provides implementations for driver APIs for CMP1.
      Generation Information :
          Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
          Device            :  PIC16F1778
-         Driver Version    :  2.01
+         Driver Version    :  2.11
      The generated drivers are tested against the following:
          Compiler          :  XC8 2.36 and above or later
          MPLAB             :  MPLAB X 6.00
@@ -48,37 +48,39 @@
    Section: Included Files
  */
 
- #include <xc.h>
- #include "pwm3.h"
 
- /**
-   Section: PWM Module APIs
- */
+#include <xc.h>
+#include "cmp1.h"
+/**
+  Section: CMP1 APIs
+*/
 
- void PWM3_Initialize(void)
- {
-    // Set the PWM to the options selected in the PIC10 / PIC12 / PIC16 / PIC18 MCUs.
-    // PWM3POL active_hi; PWM3EN enabled; 
-    PWM3CON = 0x80;   
+void CMP1_Initialize(void)
+{
 
-    // DC 127; 
-    PWM3DCH = 0x7F;   
+	// C1HYS disabled; C1SP hi_speed; C1ON enabled; C1POL not inverted; C1SYNC asynchronous; C1ZLF unfiltered;                          
+    CM1CON0 = 0x84;
+	
+	// C1INTN no_intFlag; C1INTP no_intFlag;                          
+    CM1CON1 = 0x00;
+	
+	// C1NCH CIN0-;                          
+    CM1NSEL = 0x00;
+	
+	// C1PCH DAC1;                          
+    CM1PSEL = 0x05;
+	
+	//                          
+    CMOUT = 0x00;
+	
+}
 
-    // DC 3; 
-    PWM3DCL = 0xC0;   
+bool CMP1_GetOutputStatus(void)
+{
+	return (CMOUTbits.MC1OUT);
+}
 
-    // Select timer
-    CCPTMRS2bits.P3TSEL = 0;
- }
 
- void PWM3_LoadDutyValue(uint16_t dutyValue)
- {
-     // Writing to 8 MSBs of PWM duty cycle in PWMDCH register
-     PWM3DCH = (dutyValue & 0x03FC)>>2;
-     
-     // Writing to 2 LSBs of PWM duty cycle in PWMDCL register
-     PWM3DCL = (dutyValue & 0x0003)<<6;
- }
- /**
-  End of File
- */
+/**
+ End of File
+*/
