@@ -1,4 +1,4 @@
-21944671704304581
+21932829145497482
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -51562,26 +51562,12 @@ SMD SMT ceramic resonator filter filter hand-soldering
 3
 3
 D4jikkenLibrary
-LBR-127HLD
-
-
-0
-4
-4
-D4jikkenLibrary
 MP4212_WIDE
 
 
 0
 10
 10
-D4jikkenLibrary
-RPR-220
-
-
-0
-4
-4
 Diode_SMD
 D_0201_0603Metric
 Diode SMD 0201 (0603 Metric), square (rectangular) end terminal, IPC_7351 nominal, (Body size source: https://www.vishay.com/docs/20052/crcw0201e3.pdf), generated with kicad-footprint-generator
@@ -83544,48 +83530,13 @@ rotary encoder
 0
 7
 6
-SamacSys
-1718257
-171825-7-2
-Connector
-0
-7
-7
-SamacSys
-DIP794W56P254L3486H508Q28N
-PIC16F1778-I/SP-1
+Samacsys
+DIP794W56P254L2286H533Q18N
+18-Lead Plastic Dual In-Line (P) - 300 mil Body [PDIP]
 Integrated Circuit
 0
-28
-28
-SamacSys
-HDRV4W69P0X250_1X4_1000X500X1040P
-171825-4/-1
-Connector
-0
-4
-4
-SamacSys
-MP4212Q
-MP4212(Q)-3
-Transistor
-0
-10
-10
-SamacSys
-SHDR2W69P0X250_1X2_500X530X1040P
-171825-2_2020
-Connector
-0
-2
-2
-SamacSys
-SHDR6W69P0X250_1X6_1500X490X1040P
-171825-6
-Connector
-0
-6
-6
+18
+18
 Sensor
 Aosong_DHT11_5.5x12.0_P2.54mm
 Temperature and humidity module, http://akizukidenshi.com/download/ds/aosong/DHT11.pdf
@@ -90775,10 +90726,10 @@ varistor
 0
 2
 2
-mylibrary
-MP4212_Q_WIDE
+kcct_jikken_jisaku
+LBR-127HLD
 
 
 0
-10
-10
+4
+4
