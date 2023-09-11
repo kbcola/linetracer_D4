@@ -10,6 +10,7 @@
     (rev "BETA")
     (company "KCCTD4-8")
     (comment 1 "*Unless otherwise noted, resistors used are 1/4W resistors.")
+    (comment 2 ">>>UNCHECKED CIRCUIT<<<")
   )
 
   (lib_symbols
@@ -1624,7 +1625,7 @@
     (property "Reference" "R9" (at 85.09 38.735 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "10kR" (at 85.09 41.275 0)
+    (property "Value" "10kΩ" (at 85.09 41.275 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "" (at 80.772 40.005 90)
