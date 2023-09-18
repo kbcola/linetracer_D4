@@ -71,8 +71,8 @@ void ADC_Initialize(void)
     // ADFM left; ADNREF VSS; ADPREF VDD; ADCS FOSC/2; 
     ADCON1 = 0x00;
     
-    // TRIGSEL no_auto_trigger; 
-    ADCON2 = 0x00;
+    // TRIGSEL TMR0_overflow; 
+    ADCON2 = 0x02;
     
     // ADRES 0; 
     ADRESL = 0x00;
