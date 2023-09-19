@@ -5,19 +5,37 @@
  * Created on September 18, 2023, 12:38 AM
  */
 
-#ifndef 16X2LED_H
-#define	16X2LED_H
+#ifndef HEXDLED_H
+#define	HEXDLED_H
+
+#include <xc.h>
+#include <stdint.h>
+#include <stdbool.h>
+#include "mcc_generated_files/mcc.h"
 
 #ifdef	__cplusplus
 extern "C" {
 #endif
 
+    typedef uint16_t ledSegmentsData;
 
 
+    bool LEDcolorR, LEDcolorG;
 
+    
+    void ledChooseR(void);
+    
+    void ledChooseG(void);
+    
+    bool ledSwapColor(void);
+    
+    void ledDisable(void);
+    
+    void ledBright(ledSegmentsData brightData);
+    
 #ifdef	__cplusplus
 }
 #endif
 
-#endif	/* 16X2LED_H */
+#endif	// HEXDLED_H
 

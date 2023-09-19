@@ -63,12 +63,13 @@ void SYSTEM_Initialize(void)
     ADC_Initialize();
     DAC1_Initialize();
     PWM5_Initialize();
+    TMR1_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)
 {
-    // SCS FOSC; SPLLEN disabled; IRCF 500KHz_MF; 
-    OSCCON = 0x38;
+    // SCS FOSC; SPLLEN disabled; IRCF 8MHz_HF; 
+    OSCCON = 0x70;
     // SOSCR enabled; 
     OSCSTAT = 0x80;
     // TUN 0; 

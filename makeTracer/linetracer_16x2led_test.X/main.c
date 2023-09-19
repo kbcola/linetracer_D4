@@ -42,99 +42,11 @@
 */
 
 #include "mcc_generated_files/mcc.h"
+#include "16x2led.h"
 
 /*
                          Main application
  */
-
-bool SWflag = false;
-uint16_t pwmr = 1023, pwml = 1023;
-
-void front(void){
-    SELR2_SetLow();
-    SELR1_SetHigh();
-    SELL2_SetLow();
-    SELL1_SetHigh();
-    
-    return;
-}
-
-void frontR(void){
-    front();
-    PWM3_LoadDutyValue(1023);
-    PWM4_LoadDutyValue(1023);
-    
-    SELR2_SetLow();
-    SELR1_SetLow();
-    SELL2_SetLow();
-    SELL1_SetHigh();
-    
-    return;
-}
-
-void frontL(void){
-    front();
-    PWM3_LoadDutyValue(1023);
-    PWM4_LoadDutyValue(1023);
-    
-    SELR2_SetLow();
-    SELR1_SetHigh();
-    SELL2_SetLow();
-    SELL1_SetLow();
-    
-    return;
-}
-
-void stop(void){
-    SELR2_SetLow();
-    SELR1_SetLow();
-    SELL2_SetLow();
-    SELL1_SetLow();
-    
-    return;
-}
-
-void breaks(void){
-    SELR2_SetHigh();
-    SELR1_SetHigh();
-    SELL2_SetHigh();
-    SELL1_SetHigh();
-    
-    return;
-}
-
-void buzz(){
-    for (uint8_t tone_n = 0; tone_n < 50; tone_n++){
-        BUZZ_SetHigh();
-        __delay_us(500);
-        BUZZ_SetLow();
-        __delay_us(500);
-    }
-}
-
-void readSW(void (*function)()){
-    if (SW_GetValue == 0 && !SWflag){
-        function;
-        SWflag = true;
-        __delay_ms(50);
-        break;
-    }else if (SW_GetValue() == 1){
-        SWflag = false;
-    }
-}
-
-void waitStart(void){
-    while(1){
-        if (SW_GetValue() == 0 && !SWflag){
-            buzz();
-            SWflag = true;
-            __delay_ms(100);
-            break;
-        }else if(SW_GetValue() == 1){
-            SWflag = false;
-        }
-    }
-}
 
 void main(void)
 {
@@ -156,9 +68,32 @@ void main(void)
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
 
+    uint16_t test=0b1010101010101010;
+    
+    for(uint8_t PC98=100; PC98!=0; PC98++){
+        BUZZ_SetHigh();
+        __delay_us(500);
+        BUZZ_SetLow();
+        __delay_us(500);
+    }
+    
+    for(uint8_t PC98=128; PC98!=0; PC98++){
+        BUZZ_SetHigh();
+        __delay_us(1000);
+        BUZZ_SetLow();
+        __delay_us(1000);
+    }
+    
     while (1)
     {
-        waitStart();
+//        test=0b1010101010101010;
+        test=!0b1111111111111111;
+        ledChooseG();
+//        ledBright(test);
+//        test=0b0101010101010101;
+//        test=0;
+        test=0b1;
+//        ledBright(test);
     }
 }
 /**

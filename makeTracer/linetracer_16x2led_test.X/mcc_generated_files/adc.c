@@ -68,8 +68,8 @@ void ADC_Initialize(void)
 {
     // set the ADC to the options selected in the User Interface
     
-    // ADFM left; ADNREF VSS; ADPREF VDD; ADCS FOSC/2; 
-    ADCON1 = 0x00;
+    // ADFM left; ADNREF VSS; ADPREF VDD; ADCS FOSC/8; 
+    ADCON1 = 0x10;
     
     // TRIGSEL no_auto_trigger; 
     ADCON2 = 0x00;

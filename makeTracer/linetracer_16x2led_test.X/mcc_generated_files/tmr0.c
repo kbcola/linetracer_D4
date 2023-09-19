@@ -67,11 +67,11 @@ void TMR0_Initialize(void)
     // PSA not_assigned; PS 1:256; TMRSE Increment_hi_lo; mask the nWPUEN and INTEDG bits
     OPTION_REG = (uint8_t)((OPTION_REG & 0xC0) | (0xDF & 0x3F)); 
 	
-    // TMR0 192; 
-    TMR0 = 0xC0;
+    // TMR0 254; 
+    TMR0 = 0xFE;
 	
     // Load the TMR value to reload variable
-    timer0ReloadVal= 192;
+    timer0ReloadVal= 254;
 
     // Clearing IF flag
     INTCONbits.TMR0IF = 0;
