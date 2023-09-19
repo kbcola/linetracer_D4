@@ -81,8 +81,8 @@ void TMR4_Initialize(void)
     // Clearing IF flag.
     PIR4bits.TMR4IF = 0;
 
-    // T4CKPS 1:1; T4OUTPS 1:1; TMR4ON on; 
-    T4CON = 0x80;
+    // T4CKPS 1:1; T4OUTPS 1:1; TMR4ON off; 
+    T4CON = 0x00;
 }
 
 void TMR4_ModeSet(TMR4_HLT_MODE mode)

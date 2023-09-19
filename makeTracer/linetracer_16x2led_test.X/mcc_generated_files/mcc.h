@@ -52,14 +52,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <conio.h>
+#include "interrupt_manager.h"
 #include "i2c_master.h"
 #include "tmr4.h"
-#include "pwm6.h"
 #include "tmr1.h"
+#include "pwm6.h"
 #include "tmr2.h"
 #include "cmp1.h"
-#include "pwm5.h"
 #include "tmr0.h"
+#include "pwm5.h"
 #include "fvr.h"
 #include "dac1.h"
 #include "adc.h"

@@ -16,7 +16,7 @@
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
         Device            :  PIC16F1778
         Driver Version    :  2.00
-*/
+ */
 
 /*
     (c) 2018 Microchip Technology Inc. and its subsidiaries. 
@@ -39,17 +39,17 @@
     CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
-*/
+ */
 
 #include "mcc_generated_files/mcc.h"
 #include "16x2led.h"
+#include "buzzer.h"
 
 /*
                          Main application
  */
 
-void main(void)
-{
+void main(void) {
     // initialize the device
     SYSTEM_Initialize();
 
@@ -57,10 +57,10 @@ void main(void)
     // Use the following macros to:
 
     // Enable the Global Interrupts
-    //INTERRUPT_GlobalInterruptEnable();
+    INTERRUPT_GlobalInterruptEnable();
 
     // Enable the Peripheral Interrupts
-    //INTERRUPT_PeripheralInterruptEnable();
+    INTERRUPT_PeripheralInterruptEnable();
 
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
@@ -68,34 +68,39 @@ void main(void)
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
 
-    uint16_t test=0b1010101010101010;
-    
-    for(uint8_t PC98=100; PC98!=0; PC98++){
-        BUZZ_SetHigh();
-        __delay_us(500);
-        BUZZ_SetLow();
-        __delay_us(500);
-    }
-    
-    for(uint8_t PC98=128; PC98!=0; PC98++){
-        BUZZ_SetHigh();
-        __delay_us(1000);
-        BUZZ_SetLow();
-        __delay_us(1000);
-    }
-    
-    while (1)
-    {
-//        test=0b1010101010101010;
-        test=!0b1111111111111111;
-        ledChooseG();
-//        ledBright(test);
-//        test=0b0101010101010101;
-//        test=0;
-        test=0b1;
-//        ledBright(test);
+    uint16_t test, gtest;
+
+    //    PC98
+    tone(2000);
+    __delay_ms(200);
+    tone(1000);
+    __delay_ms(200);
+    noTone();
+    //    PC98
+
+    test = 0b0110000000000000;
+    gtest = 0b0110000000000000;
+    ledBright(test);
+
+    while (1) {
+        //        test=0b1010101010101010;
+
+        bool head = test & 0b1;
+        test >>= 1;
+        test = test | (head << 15);
+        head = gtest & 0b1000000000000000;
+        gtest <<= 1;
+        gtest = gtest | head;
+        for (int o = 0; o < 100; o++) {
+            ledChooseR();
+            ledBright(test);
+            ledChooseG();
+            ledBright(gtest);
+        }
+        //        test=0b0101010101010101;
+        //        test=0;
     }
 }
 /**
  End of File
-*/
+ */

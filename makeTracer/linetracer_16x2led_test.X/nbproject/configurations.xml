@@ -19,14 +19,16 @@
         <itemPath>mcc_generated_files/i2c_master.h</itemPath>
         <itemPath>mcc_generated_files/adc.h</itemPath>
         <itemPath>mcc_generated_files/cmp1.h</itemPath>
-        <itemPath>mcc_generated_files/tmr4.h</itemPath>
         <itemPath>mcc_generated_files/fvr.h</itemPath>
         <itemPath>mcc_generated_files/dac1.h</itemPath>
         <itemPath>mcc_generated_files/tmr0.h</itemPath>
+        <itemPath>mcc_generated_files/interrupt_manager.h</itemPath>
+        <itemPath>mcc_generated_files/tmr4.h</itemPath>
         <itemPath>mcc_generated_files/tmr1.h</itemPath>
       </logicalFolder>
       <itemPath>16x2led.h</itemPath>
       <itemPath>buzzer.h</itemPath>
+      <itemPath>switchHandler.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -49,15 +51,18 @@
         <itemPath>mcc_generated_files/mcc.c</itemPath>
         <itemPath>mcc_generated_files/device_config.c</itemPath>
         <itemPath>mcc_generated_files/adc.c</itemPath>
-        <itemPath>mcc_generated_files/tmr4.c</itemPath>
         <itemPath>mcc_generated_files/cmp1.c</itemPath>
         <itemPath>mcc_generated_files/dac1.c</itemPath>
         <itemPath>mcc_generated_files/fvr.c</itemPath>
         <itemPath>mcc_generated_files/tmr0.c</itemPath>
+        <itemPath>mcc_generated_files/interrupt_manager.c</itemPath>
+        <itemPath>mcc_generated_files/tmr4.c</itemPath>
         <itemPath>mcc_generated_files/tmr1.c</itemPath>
       </logicalFolder>
       <itemPath>main.c</itemPath>
       <itemPath>16x2led.c</itemPath>
+      <itemPath>buzzer.c</itemPath>
+      <itemPath>switchHandler.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
