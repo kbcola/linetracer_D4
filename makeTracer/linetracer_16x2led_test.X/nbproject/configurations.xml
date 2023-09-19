@@ -26,6 +26,7 @@
         <itemPath>mcc_generated_files/tmr1.h</itemPath>
       </logicalFolder>
       <itemPath>16x2led.h</itemPath>
+      <itemPath>buzzer.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
