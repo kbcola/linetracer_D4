@@ -60,6 +60,17 @@ void __interrupt() INTERRUPT_InterruptManager (void)
     {
         TMR0_ISR();
     }
+    else if(INTCONbits.PEIE == 1)
+    {
+        if(PIE4bits.TMR4IE == 1 && PIR4bits.TMR4IF == 1)
+        {
+            TMR4_ISR();
+        } 
+        else
+        {
+            //Unhandled Interrupt
+        }
+    }      
     else
     {
         //Unhandled Interrupt
