@@ -53,20 +53,22 @@
 volatile uint16_t headMaskR = 0b1;
 volatile uint16_t headMaskG = 0b1000000000000000;
 volatile bool revLoop = false;
+volatile uint8_t shiftR = 15;
+volatile uint8_t shiftG = 1;
 
 void l1(void){
     revLoop = true;
-    volatile uint16_t buf = headMaskR;
-    headMaskR = headMaskG;
-    headMaskG = buf;
+    headMaskR = 0b1000000000000000;
+    headMaskG = 0b1;
+    tone(880);
     return;
 }
 
 void l2(void){
     revLoop = false;
-    volatile uint16_t buf = headMaskR;
-    headMaskR = headMaskG;
-    headMaskG = buf;
+    headMaskR = 0b1;
+    headMaskG = 0b1000000000000000;
+    tone(440);
     return;
 }
 
@@ -108,7 +110,27 @@ void main(void) {
     SW1SetFunction(l1);
     SW2SetFunction(l2);
     
+//    tone(523);
+//    __delay_ms(500);
+//    tone(587);
+//    __delay_ms(500);
+//    tone(659);
+//    __delay_ms(500);
+//    tone(698);
+//    __delay_ms(500);
+//    tone(784);
+//    __delay_ms(500);
+//    tone(880);
+//    __delay_ms(500);
+//    tone(988);
+//    __delay_ms(500);
+//    tone(1046);
+//    __delay_ms(500);
+//    noTone();
+    
     while (1) {
+        LED_G_PORT = !revLoop;
+        LED_R_PORT = revLoop;
         //        test=0b1010101010101010;
 
         bool head = test & headMaskR;
@@ -117,7 +139,7 @@ void main(void) {
         }else{
             test >>= 1;
         }
-        test = test | (head << 15);
+        test = test | (head << ((uint8_t)(!revLoop) * 15));
         
         head = gtest & headMaskG;
         if(revLoop){
@@ -125,7 +147,7 @@ void main(void) {
         }else{
             gtest <<= 1;
         }
-        gtest = gtest | head;
+        gtest = gtest | (head << ((uint8_t)(revLoop) * 15));
         
         for (int o = 0; o < 100; o++) {
             ledChooseR();
