@@ -44,10 +44,31 @@
 #include "mcc_generated_files/mcc.h"
 #include "16x2led.h"
 #include "buzzer.h"
+#include "switchHandler.h"
 
 /*
                          Main application
  */
+
+volatile uint16_t headMaskR = 0b1;
+volatile uint16_t headMaskG = 0b1000000000000000;
+volatile bool revLoop = false;
+
+void l1(void){
+    revLoop = true;
+    volatile uint16_t buf = headMaskR;
+    headMaskR = headMaskG;
+    headMaskG = buf;
+    return;
+}
+
+void l2(void){
+    revLoop = false;
+    volatile uint16_t buf = headMaskR;
+    headMaskR = headMaskG;
+    headMaskG = buf;
+    return;
+}
 
 void main(void) {
     // initialize the device
@@ -70,6 +91,8 @@ void main(void) {
 
     uint16_t test, gtest;
 
+    SWSetupISR(); // >>> IMPORTANT: DO NOT DELETE IT <<<
+    
     //    PC98
     tone(2000);
     __delay_ms(200);
@@ -82,15 +105,28 @@ void main(void) {
     gtest = 0b0110000000000000;
     ledBright(test);
 
+    SW1SetFunction(l1);
+    SW2SetFunction(l2);
+    
     while (1) {
         //        test=0b1010101010101010;
 
-        bool head = test & 0b1;
-        test >>= 1;
+        bool head = test & headMaskR;
+        if(revLoop){
+            test <<= 1;
+        }else{
+            test >>= 1;
+        }
         test = test | (head << 15);
-        head = gtest & 0b1000000000000000;
-        gtest <<= 1;
+        
+        head = gtest & headMaskG;
+        if(revLoop){
+            gtest >>= 1;
+        }else{
+            gtest <<= 1;
+        }
         gtest = gtest | head;
+        
         for (int o = 0; o < 100; o++) {
             ledChooseR();
             ledBright(test);

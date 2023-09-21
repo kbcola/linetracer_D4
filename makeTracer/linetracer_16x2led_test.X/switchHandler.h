@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-    void setupSWISR(void);
+    void SWSetupISR(void);
     
     void SW1SetFunction(void (* SW1Handler)(void));
     

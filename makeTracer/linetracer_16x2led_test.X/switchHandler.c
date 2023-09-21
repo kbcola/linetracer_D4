@@ -1,12 +1,15 @@
 #include "switchHandler.h"
 
-bool isSW1Chating = false;
-bool isSW2Chating = false;
+#define defaultTime 0x7C // 1ms (8us x 125)
+
+volatile bool isSW1Chating = false;
+volatile bool isSW2Chating = false;
+volatile uint8_t newStartTime = 0x7C; // 1ms (8us x n times)
 
 void (*SW1_InterruptHandler)(void);
 void (*SW2_InterruptHandler)(void);
 
-void setupSWISR(void){
+void SWSetupISR(void){
     IOCAF4_SetInterruptHandler(SW1Pushed);
     IOCAF5_SetInterruptHandler(SW2Pushed);
 }
@@ -24,19 +27,39 @@ void SW1Pushed() {
     SW1_InterruptHandler();
     isSW1Chating = true;
     if(isSW2Chating){ // double interrupt is covered by TMR4
-        
+        uint8_t nowtime = TMR4_ReadTimer();
+        newStartTime = defaultTime - nowtime;
     }
     return;
 }
 
 void SW2Pushed(){
-    
+    if(isSW2Chating) return;
+    SW2_InterruptHandler();
+    isSW2Chating = true;
+    if(isSW1Chating){ // double interrupt is covered by TMR4
+        uint8_t nowtime = TMR4_ReadTimer();
+        newStartTime = defaultTime - nowtime;
+    }
+    return;
 }
 
 void SW1ChatteringFinish(void){
-        
+    isSW1Chating = false;
+    if(isSW2Chating){
+        TMR4_Period8BitSet(newStartTime); // 1ms - elapsedTime
+    }else{
+        TMR4_Period8BitSet(defaultTime); // 1ms
+    }
+    return;
 }
     
 void SW2ChatteringFinish(void){
-        
+    isSW2Chating = false;
+    if(isSW1Chating){
+        TMR4_Period8BitSet(newStartTime); // 1ms - elapsedTime
+    }else{
+        TMR4_Period8BitSet(defaultTime); // 1ms
+    }
+    return;
 }
