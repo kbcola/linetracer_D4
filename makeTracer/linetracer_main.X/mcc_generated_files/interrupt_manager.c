@@ -1,24 +1,26 @@
 /**
-  FVR Generated Driver File
+  Generated Interrupt Manager Source File
 
-  @Company
+  @Company:
     Microchip Technology Inc.
 
-  @File Name
-    fvr.c
+  @File Name:
+    interrupt_manager.c
 
-  @Summary
-    This is the generated driver implementation file for the FVR driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+  @Summary:
+    This is the Interrupt Manager file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
-  @Description
-    This source file provides APIs for FVR.
+  @Description:
+    This header file provides implementations for global interrupt handling.
+    For individual peripheral handlers please see the peripheral driver for
+    all modules selected in the GUI.
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
         Device            :  PIC16F1778
-        Driver Version    :  2.01
+        Driver Version    :  2.04
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.36 and above
-        MPLAB             :  MPLAB X 6.00
+        Compiler          :  XC8 2.36 and above or later
+        MPLAB 	          :  MPLAB X 6.00
 */
 
 /*
@@ -44,28 +46,36 @@
     SOFTWARE.
 */
 
-/**
-  Section: Included Files
-*/
+#include "interrupt_manager.h"
+#include "mcc.h"
 
-#include <xc.h>
-#include "fvr.h"
-
-/**
-  Section: FVR APIs
-*/
-
-void FVR_Initialize(void)
+void __interrupt() INTERRUPT_InterruptManager (void)
 {
-    // CDAFVR 2x; FVREN enabled; TSRNG Lo_range; ADFVR off; TSEN disabled; 
-    FVRCON = 0x88;
-}
-
-bool FVR_IsOutputReady(void)
-{
-    return (FVRCONbits.FVRRDY);
+    // interrupt handler
+    if(INTCONbits.TMR0IE == 1 && INTCONbits.TMR0IF == 1)
+    {
+        TMR0_ISR();
+    }
+    else if(INTCONbits.IOCIE == 1 && INTCONbits.IOCIF == 1)
+    {
+        PIN_MANAGER_IOC();
+    }
+    else if(INTCONbits.PEIE == 1)
+    {
+        if(PIE4bits.TMR4IE == 1 && PIR4bits.TMR4IF == 1)
+        {
+            TMR4_ISR();
+        } 
+        else
+        {
+            //Unhandled Interrupt
+        }
+    }      
+    else
+    {
+        //Unhandled Interrupt
+    }
 }
 /**
  End of File
 */
-

@@ -1,4 +1,4 @@
- /* 
+/* 
  * File:   sensor.h
  * Author: seikin
  *
@@ -16,23 +16,25 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-    
+
     typedef uint8_t sensorPortNum;
     typedef uint16_t ascanResult;
     typedef bool dscanResult;
-    
-    sensorPortNum spnSave = 0;
-    
+
     bool sensorSelector(sensorPortNum spn);
-    
+
     ascanResult analogScan(void);
-            
+
     dscanResult digitalScan(void);
-    
+
     ascanResult analogScanP(sensorPortNum spn);
-            
+
     dscanResult digitalScanP(sensorPortNum spn);
-    
+
+    void changeDigitalThr(uint16_t thr);
+
+    bool checkDigitalThr(uint16_t thr, sensorPortNum spn);
+
 #ifdef	__cplusplus
 }
 #endif

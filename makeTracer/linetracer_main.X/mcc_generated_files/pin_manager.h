@@ -19,7 +19,7 @@
     The generated drivers are tested against the following:
         Compiler          :  XC8 2.36 and above
         MPLAB 	          :  MPLAB X 6.00	
-*/
+ */
 
 /*
     (c) 2018 Microchip Technology Inc. and its subsidiaries. 
@@ -42,14 +42,14 @@
     CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
-*/
+ */
 
 #ifndef PIN_MANAGER_H
 #define PIN_MANAGER_H
 
 /**
   Section: Included Files
-*/
+ */
 
 #include <xc.h>
 
@@ -65,45 +65,45 @@
 #define PULL_UP_ENABLED      1
 #define PULL_UP_DISABLED     0
 
-// get/set SENS_DI aliases
-#define SENS_DI_TRIS                 TRISAbits.TRISA0
-#define SENS_DI_LAT                  LATAbits.LATA0
-#define SENS_DI_PORT                 PORTAbits.RA0
-#define SENS_DI_WPU                  WPUAbits.WPUA0
-#define SENS_DI_OD                   ODCONAbits.ODA0
-#define SENS_DI_ANS                  ANSELAbits.ANSA0
-#define SENS_DI_SetHigh()            do { LATAbits.LATA0 = 1; } while(0)
-#define SENS_DI_SetLow()             do { LATAbits.LATA0 = 0; } while(0)
-#define SENS_DI_Toggle()             do { LATAbits.LATA0 = ~LATAbits.LATA0; } while(0)
-#define SENS_DI_GetValue()           PORTAbits.RA0
-#define SENS_DI_SetDigitalInput()    do { TRISAbits.TRISA0 = 1; } while(0)
-#define SENS_DI_SetDigitalOutput()   do { TRISAbits.TRISA0 = 0; } while(0)
-#define SENS_DI_SetPullup()          do { WPUAbits.WPUA0 = 1; } while(0)
-#define SENS_DI_ResetPullup()        do { WPUAbits.WPUA0 = 0; } while(0)
-#define SENS_DI_SetPushPull()        do { ODCONAbits.ODA0 = 0; } while(0)
-#define SENS_DI_SetOpenDrain()       do { ODCONAbits.ODA0 = 1; } while(0)
-#define SENS_DI_SetAnalogMode()      do { ANSELAbits.ANSA0 = 1; } while(0)
-#define SENS_DI_SetDigitalMode()     do { ANSELAbits.ANSA0 = 0; } while(0)
+// get/set channel_AN0 aliases
+#define channel_AN0_TRIS                 TRISAbits.TRISA0
+#define channel_AN0_LAT                  LATAbits.LATA0
+#define channel_AN0_PORT                 PORTAbits.RA0
+#define channel_AN0_WPU                  WPUAbits.WPUA0
+#define channel_AN0_OD                   ODCONAbits.ODA0
+#define channel_AN0_ANS                  ANSELAbits.ANSA0
+#define channel_AN0_SetHigh()            do { LATAbits.LATA0 = 1; } while(0)
+#define channel_AN0_SetLow()             do { LATAbits.LATA0 = 0; } while(0)
+#define channel_AN0_Toggle()             do { LATAbits.LATA0 = ~LATAbits.LATA0; } while(0)
+#define channel_AN0_GetValue()           PORTAbits.RA0
+#define channel_AN0_SetDigitalInput()    do { TRISAbits.TRISA0 = 1; } while(0)
+#define channel_AN0_SetDigitalOutput()   do { TRISAbits.TRISA0 = 0; } while(0)
+#define channel_AN0_SetPullup()          do { WPUAbits.WPUA0 = 1; } while(0)
+#define channel_AN0_ResetPullup()        do { WPUAbits.WPUA0 = 0; } while(0)
+#define channel_AN0_SetPushPull()        do { ODCONAbits.ODA0 = 0; } while(0)
+#define channel_AN0_SetOpenDrain()       do { ODCONAbits.ODA0 = 1; } while(0)
+#define channel_AN0_SetAnalogMode()      do { ANSELAbits.ANSA0 = 1; } while(0)
+#define channel_AN0_SetDigitalMode()     do { ANSELAbits.ANSA0 = 0; } while(0)
 
-// get/set SENS_AN aliases
-#define SENS_AN_TRIS                 TRISAbits.TRISA1
-#define SENS_AN_LAT                  LATAbits.LATA1
-#define SENS_AN_PORT                 PORTAbits.RA1
-#define SENS_AN_WPU                  WPUAbits.WPUA1
-#define SENS_AN_OD                   ODCONAbits.ODA1
-#define SENS_AN_ANS                  ANSELAbits.ANSA1
-#define SENS_AN_SetHigh()            do { LATAbits.LATA1 = 1; } while(0)
-#define SENS_AN_SetLow()             do { LATAbits.LATA1 = 0; } while(0)
-#define SENS_AN_Toggle()             do { LATAbits.LATA1 = ~LATAbits.LATA1; } while(0)
-#define SENS_AN_GetValue()           PORTAbits.RA1
-#define SENS_AN_SetDigitalInput()    do { TRISAbits.TRISA1 = 1; } while(0)
-#define SENS_AN_SetDigitalOutput()   do { TRISAbits.TRISA1 = 0; } while(0)
-#define SENS_AN_SetPullup()          do { WPUAbits.WPUA1 = 1; } while(0)
-#define SENS_AN_ResetPullup()        do { WPUAbits.WPUA1 = 0; } while(0)
-#define SENS_AN_SetPushPull()        do { ODCONAbits.ODA1 = 0; } while(0)
-#define SENS_AN_SetOpenDrain()       do { ODCONAbits.ODA1 = 1; } while(0)
-#define SENS_AN_SetAnalogMode()      do { ANSELAbits.ANSA1 = 1; } while(0)
-#define SENS_AN_SetDigitalMode()     do { ANSELAbits.ANSA1 = 0; } while(0)
+// get/set channel_AN1 aliases
+#define channel_AN1_TRIS                 TRISAbits.TRISA1
+#define channel_AN1_LAT                  LATAbits.LATA1
+#define channel_AN1_PORT                 PORTAbits.RA1
+#define channel_AN1_WPU                  WPUAbits.WPUA1
+#define channel_AN1_OD                   ODCONAbits.ODA1
+#define channel_AN1_ANS                  ANSELAbits.ANSA1
+#define channel_AN1_SetHigh()            do { LATAbits.LATA1 = 1; } while(0)
+#define channel_AN1_SetLow()             do { LATAbits.LATA1 = 0; } while(0)
+#define channel_AN1_Toggle()             do { LATAbits.LATA1 = ~LATAbits.LATA1; } while(0)
+#define channel_AN1_GetValue()           PORTAbits.RA1
+#define channel_AN1_SetDigitalInput()    do { TRISAbits.TRISA1 = 1; } while(0)
+#define channel_AN1_SetDigitalOutput()   do { TRISAbits.TRISA1 = 0; } while(0)
+#define channel_AN1_SetPullup()          do { WPUAbits.WPUA1 = 1; } while(0)
+#define channel_AN1_ResetPullup()        do { WPUAbits.WPUA1 = 0; } while(0)
+#define channel_AN1_SetPushPull()        do { ODCONAbits.ODA1 = 0; } while(0)
+#define channel_AN1_SetOpenDrain()       do { ODCONAbits.ODA1 = 1; } while(0)
+#define channel_AN1_SetAnalogMode()      do { ANSELAbits.ANSA1 = 1; } while(0)
+#define channel_AN1_SetDigitalMode()     do { ANSELAbits.ANSA1 = 0; } while(0)
 
 // get/set SENS_SEL1 aliases
 #define SENS_SEL1_TRIS                 TRISAbits.TRISA2
@@ -184,6 +184,23 @@
 #define SW2_SetOpenDrain()       do { ODCONAbits.ODA5 = 1; } while(0)
 #define SW2_SetAnalogMode()      do { ANSELAbits.ANSA5 = 1; } while(0)
 #define SW2_SetDigitalMode()     do { ANSELAbits.ANSA5 = 0; } while(0)
+
+// get/set LED_G aliases
+#define LED_G_TRIS                 TRISAbits.TRISA6
+#define LED_G_LAT                  LATAbits.LATA6
+#define LED_G_PORT                 PORTAbits.RA6
+#define LED_G_WPU                  WPUAbits.WPUA6
+#define LED_G_OD                   ODCONAbits.ODA6
+#define LED_G_SetHigh()            do { LATAbits.LATA6 = 1; } while(0)
+#define LED_G_SetLow()             do { LATAbits.LATA6 = 0; } while(0)
+#define LED_G_Toggle()             do { LATAbits.LATA6 = ~LATAbits.LATA6; } while(0)
+#define LED_G_GetValue()           PORTAbits.RA6
+#define LED_G_SetDigitalInput()    do { TRISAbits.TRISA6 = 1; } while(0)
+#define LED_G_SetDigitalOutput()   do { TRISAbits.TRISA6 = 0; } while(0)
+#define LED_G_SetPullup()          do { WPUAbits.WPUA6 = 1; } while(0)
+#define LED_G_ResetPullup()        do { WPUAbits.WPUA6 = 0; } while(0)
+#define LED_G_SetPushPull()        do { ODCONAbits.ODA6 = 0; } while(0)
+#define LED_G_SetOpenDrain()       do { ODCONAbits.ODA6 = 1; } while(0)
 
 // get/set BUZZ aliases
 #define BUZZ_TRIS                 TRISAbits.TRISA7
@@ -315,6 +332,23 @@
 #define RB7_SetPullup()             do { WPUBbits.WPUB7 = 1; } while(0)
 #define RB7_ResetPullup()           do { WPUBbits.WPUB7 = 0; } while(0)
 
+// get/set LED_R aliases
+#define LED_R_TRIS                 TRISCbits.TRISC0
+#define LED_R_LAT                  LATCbits.LATC0
+#define LED_R_PORT                 PORTCbits.RC0
+#define LED_R_WPU                  WPUCbits.WPUC0
+#define LED_R_OD                   ODCONCbits.ODC0
+#define LED_R_SetHigh()            do { LATCbits.LATC0 = 1; } while(0)
+#define LED_R_SetLow()             do { LATCbits.LATC0 = 0; } while(0)
+#define LED_R_Toggle()             do { LATCbits.LATC0 = ~LATCbits.LATC0; } while(0)
+#define LED_R_GetValue()           PORTCbits.RC0
+#define LED_R_SetDigitalInput()    do { TRISCbits.TRISC0 = 1; } while(0)
+#define LED_R_SetDigitalOutput()   do { TRISCbits.TRISC0 = 0; } while(0)
+#define LED_R_SetPullup()          do { WPUCbits.WPUC0 = 1; } while(0)
+#define LED_R_ResetPullup()        do { WPUCbits.WPUC0 = 0; } while(0)
+#define LED_R_SetPushPull()        do { ODCONCbits.ODC0 = 0; } while(0)
+#define LED_R_SetOpenDrain()       do { ODCONCbits.ODC0 = 1; } while(0)
+
 // get/set RC1 procedures
 #define RC1_SetHigh()            do { LATCbits.LATC1 = 1; } while(0)
 #define RC1_SetLow()             do { LATCbits.LATC1 = 0; } while(0)
@@ -439,7 +473,7 @@
    @Example
     PIN_MANAGER_Initialize();
  */
-void PIN_MANAGER_Initialize (void);
+void PIN_MANAGER_Initialize(void);
 
 /**
  * @Param
@@ -454,8 +488,176 @@ void PIN_MANAGER_Initialize (void);
 void PIN_MANAGER_IOC(void);
 
 
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    Interrupt on Change Handler for the IOCAF4 pin functionality
+ * @Example
+    IOCAF4_ISR();
+ */
+void IOCAF4_ISR(void);
+
+/**
+  @Summary
+    Interrupt Handler Setter for IOCAF4 pin interrupt-on-change functionality
+
+  @Description
+    Allows selecting an interrupt handler for IOCAF4 at application runtime
+    
+  @Preconditions
+    Pin Manager intializer called
+
+  @Returns
+    None.
+
+  @Param
+    InterruptHandler function pointer.
+
+  @Example
+    PIN_MANAGER_Initialize();
+    IOCAF4_SetInterruptHandler(MyInterruptHandler);
+
+ */
+void IOCAF4_SetInterruptHandler(void (* InterruptHandler)(void));
+
+/**
+  @Summary
+    Dynamic Interrupt Handler for IOCAF4 pin
+
+  @Description
+    This is a dynamic interrupt handler to be used together with the IOCAF4_SetInterruptHandler() method.
+    This handler is called every time the IOCAF4 ISR is executed and allows any function to be registered at runtime.
+    
+  @Preconditions
+    Pin Manager intializer called
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    PIN_MANAGER_Initialize();
+    IOCAF4_SetInterruptHandler(IOCAF4_InterruptHandler);
+
+ */
+extern void (*IOCAF4_InterruptHandler)(void);
+
+/**
+  @Summary
+    Default Interrupt Handler for IOCAF4 pin
+
+  @Description
+    This is a predefined interrupt handler to be used together with the IOCAF4_SetInterruptHandler() method.
+    This handler is called every time the IOCAF4 ISR is executed. 
+    
+  @Preconditions
+    Pin Manager intializer called
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    PIN_MANAGER_Initialize();
+    IOCAF4_SetInterruptHandler(IOCAF4_DefaultInterruptHandler);
+
+ */
+void IOCAF4_DefaultInterruptHandler(void);
+
+
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    Interrupt on Change Handler for the IOCAF5 pin functionality
+ * @Example
+    IOCAF5_ISR();
+ */
+void IOCAF5_ISR(void);
+
+/**
+  @Summary
+    Interrupt Handler Setter for IOCAF5 pin interrupt-on-change functionality
+
+  @Description
+    Allows selecting an interrupt handler for IOCAF5 at application runtime
+    
+  @Preconditions
+    Pin Manager intializer called
+
+  @Returns
+    None.
+
+  @Param
+    InterruptHandler function pointer.
+
+  @Example
+    PIN_MANAGER_Initialize();
+    IOCAF5_SetInterruptHandler(MyInterruptHandler);
+
+ */
+void IOCAF5_SetInterruptHandler(void (* InterruptHandler)(void));
+
+/**
+  @Summary
+    Dynamic Interrupt Handler for IOCAF5 pin
+
+  @Description
+    This is a dynamic interrupt handler to be used together with the IOCAF5_SetInterruptHandler() method.
+    This handler is called every time the IOCAF5 ISR is executed and allows any function to be registered at runtime.
+    
+  @Preconditions
+    Pin Manager intializer called
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    PIN_MANAGER_Initialize();
+    IOCAF5_SetInterruptHandler(IOCAF5_InterruptHandler);
+
+ */
+extern void (*IOCAF5_InterruptHandler)(void);
+
+/**
+  @Summary
+    Default Interrupt Handler for IOCAF5 pin
+
+  @Description
+    This is a predefined interrupt handler to be used together with the IOCAF5_SetInterruptHandler() method.
+    This handler is called every time the IOCAF5 ISR is executed. 
+    
+  @Preconditions
+    Pin Manager intializer called
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    PIN_MANAGER_Initialize();
+    IOCAF5_SetInterruptHandler(IOCAF5_DefaultInterruptHandler);
+
+ */
+void IOCAF5_DefaultInterruptHandler(void);
+
+
 
 #endif // PIN_MANAGER_H
 /**
  End of File
-*/
+ */

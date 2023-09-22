@@ -16,7 +16,7 @@
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
         Device            :  PIC16F1778
         Driver Version    :  2.00
-*/
+ */
 
 /*
     (c) 2018 Microchip Technology Inc. and its subsidiaries. 
@@ -39,105 +39,42 @@
     CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
-*/
+ */
 
 #include "mcc_generated_files/mcc.h"
+
+#include "16x2led.h"
+#include "buzzer.h"
+#include "switchHandler.h"
+#include "sensor.h"
 
 /*
                          Main application
  */
 
-bool SWflag = false;
-uint16_t pwmr = 1023, pwml = 1023;
+uint16_t data = 0b1;
 
-void front(void){
-    SELR2_SetLow();
-    SELR1_SetHigh();
-    SELL2_SetLow();
-    SELL1_SetHigh();
-    
+void segmentGo(void) {
+    LED_G_PORT = 0;
+    LED_R_PORT = 1;
+    tone(1000);
+    bool head = data & 0x8000;
+    data <<= 1;
+    data |= head;
+    noTone();
     return;
 }
 
-void frontR(void){
-    front();
-    PWM3_LoadDutyValue(1023);
-    PWM4_LoadDutyValue(1023);
-    
-    SELR2_SetLow();
-    SELR1_SetLow();
-    SELL2_SetLow();
-    SELL1_SetHigh();
-    
+void segmentCFlip(void) {
+    LED_R_PORT = 0;
+    LED_G_PORT = 1;
+    tone(2000);
+    ledSwapColor();
+    noTone();
     return;
 }
 
-void frontL(void){
-    front();
-    PWM3_LoadDutyValue(1023);
-    PWM4_LoadDutyValue(1023);
-    
-    SELR2_SetLow();
-    SELR1_SetHigh();
-    SELL2_SetLow();
-    SELL1_SetLow();
-    
-    return;
-}
-
-void stop(void){
-    SELR2_SetLow();
-    SELR1_SetLow();
-    SELL2_SetLow();
-    SELL1_SetLow();
-    
-    return;
-}
-
-void breaks(void){
-    SELR2_SetHigh();
-    SELR1_SetHigh();
-    SELL2_SetHigh();
-    SELL1_SetHigh();
-    
-    return;
-}
-
-void buzz(){
-    for (uint8_t tone_n = 0; tone_n < 50; tone_n++){
-        BUZZ_SetHigh();
-        __delay_us(500);
-        BUZZ_SetLow();
-        __delay_us(500);
-    }
-}
-
-void readSW(void (*function)()){
-    if (SW_GetValue == 0 && !SWflag){
-        function;
-        SWflag = true;
-        __delay_ms(50);
-        break;
-    }else if (SW_GetValue() == 1){
-        SWflag = false;
-    }
-}
-
-void waitStart(void){
-    while(1){
-        if (SW_GetValue() == 0 && !SWflag){
-            buzz();
-            SWflag = true;
-            __delay_ms(100);
-            break;
-        }else if(SW_GetValue() == 1){
-            SWflag = false;
-        }
-    }
-}
-
-void main(void)
-{
+void main(void) {
     // initialize the device
     SYSTEM_Initialize();
 
@@ -145,10 +82,10 @@ void main(void)
     // Use the following macros to:
 
     // Enable the Global Interrupts
-    //INTERRUPT_GlobalInterruptEnable();
+    INTERRUPT_GlobalInterruptEnable();
 
     // Enable the Peripheral Interrupts
-    //INTERRUPT_PeripheralInterruptEnable();
+    INTERRUPT_PeripheralInterruptEnable();
 
     // Disable the Global Interrupts
     //INTERRUPT_GlobalInterruptDisable();
@@ -156,11 +93,30 @@ void main(void)
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
 
-    while (1)
-    {
-        waitStart();
+    SWSetupISR(); // DO NOT DELETE IT
+
+    LED_G_PORT = 0;
+    LED_R_PORT = 1;
+    tone(2000);
+    __delay_ms(200);
+    tone(1000);
+    __delay_ms(200);
+    noTone();
+
+    LED_R_PORT = 0;
+    LED_G_PORT = 1;
+    SW1SetFunction(segmentCFlip);
+    SW2SetFunction(segmentGo);
+
+    LED_G_PORT = 0;
+    LED_R_PORT = 1;
+
+    ledChooseG();
+
+    while (1) {
+        ledBright(data);
     }
 }
 /**
  End of File
-*/
+ */

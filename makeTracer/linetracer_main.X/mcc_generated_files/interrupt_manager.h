@@ -1,24 +1,26 @@
 /**
-  I2C Generated Driver API Header File
+  Generated Interrupt Manager Header File
 
-  @Company
+  @Company:
     Microchip Technology Inc.
 
-  @File Name
-    i2c_master_example.h
+  @File Name:
+    interrupt_manager.h
 
-  @Summary
-    This is the generated header file for the I2C driver example using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+  @Summary:
+    This is the Interrupt Manager file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
-  @Description
-    This header file provides APIs for driver for I2C.
+  @Description:
+    This header file provides implementations for global interrupt handling.
+    For individual peripheral handlers please see the peripheral driver for
+    all modules selected in the GUI.
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
         Device            :  PIC16F1778
-        Driver Version    :  1.0.0
+        Driver Version    :  2.03
     The generated drivers are tested against the following:
         Compiler          :  XC8 2.36 and above or later
-        MPLAB             :  MPLAB X 6.00
+        MPLAB 	          :  MPLAB X 6.00
 */
 
 /*
@@ -44,19 +46,59 @@
     SOFTWARE.
 */
 
-#ifndef I2C_MASTER_EXAMPLE_H
-#define I2C_MASTER_EXAMPLE_H
+#ifndef INTERRUPT_MANAGER_H
+#define INTERRUPT_MANAGER_H
 
-#include <stdint.h>
-#include <stdio.h>
-#include "../i2c_master.h"
 
-uint8_t  I2C_Read1ByteRegister(i2c_address_t address, uint8_t reg);
-uint16_t I2C_Read2ByteRegister(i2c_address_t address, uint8_t reg);
-void I2C_Write1ByteRegister(i2c_address_t address, uint8_t reg, uint8_t data);
-void I2C_Write2ByteRegister(i2c_address_t address, uint8_t reg, uint16_t data);
-void I2C_WriteNBytes(i2c_address_t address, uint8_t *data, size_t len);
-void I2C_ReadNBytes(i2c_address_t address, uint8_t *data, size_t len);
-void I2C_ReadDataBlock(i2c_address_t address, uint8_t reg, uint8_t *data, size_t len);
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    This macro will enable global interrupts.
+ * @Example
+    INTERRUPT_GlobalInterruptEnable();
+ */
+#define INTERRUPT_GlobalInterruptEnable() (INTCONbits.GIE = 1)
 
-#endif /* I2C_MASTER_EXAMPLE_H */
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    This macro will disable global interrupts.
+ * @Example
+    INTERRUPT_GlobalInterruptDisable();
+ */
+#define INTERRUPT_GlobalInterruptDisable() (INTCONbits.GIE = 0)
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    This macro will enable peripheral interrupts.
+ * @Example
+    INTERRUPT_PeripheralInterruptEnable();
+ */
+#define INTERRUPT_PeripheralInterruptEnable() (INTCONbits.PEIE = 1)
+
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    This macro will disable peripheral interrupts.
+ * @Example
+    INTERRUPT_PeripheralInterruptDisable();
+ */
+#define INTERRUPT_PeripheralInterruptDisable() (INTCONbits.PEIE = 0)
+
+
+#endif  // INTERRUPT_MANAGER_H
+/**
+ End of File
+*/
