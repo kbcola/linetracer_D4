@@ -19,7 +19,7 @@
     The generated drivers are tested against the following:
         Compiler          :  XC8 2.36 and above
         MPLAB 	          :  MPLAB X 6.00	
- */
+*/
 
 /*
     (c) 2018 Microchip Technology Inc. and its subsidiaries. 
@@ -42,14 +42,14 @@
     CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
- */
+*/
 
 #ifndef PIN_MANAGER_H
 #define PIN_MANAGER_H
 
 /**
   Section: Included Files
- */
+*/
 
 #include <xc.h>
 
@@ -473,7 +473,7 @@
    @Example
     PIN_MANAGER_Initialize();
  */
-void PIN_MANAGER_Initialize(void);
+void PIN_MANAGER_Initialize (void);
 
 /**
  * @Param
@@ -520,7 +520,7 @@ void IOCAF4_ISR(void);
     PIN_MANAGER_Initialize();
     IOCAF4_SetInterruptHandler(MyInterruptHandler);
 
- */
+*/
 void IOCAF4_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
@@ -544,7 +544,7 @@ void IOCAF4_SetInterruptHandler(void (* InterruptHandler)(void));
     PIN_MANAGER_Initialize();
     IOCAF4_SetInterruptHandler(IOCAF4_InterruptHandler);
 
- */
+*/
 extern void (*IOCAF4_InterruptHandler)(void);
 
 /**
@@ -568,7 +568,7 @@ extern void (*IOCAF4_InterruptHandler)(void);
     PIN_MANAGER_Initialize();
     IOCAF4_SetInterruptHandler(IOCAF4_DefaultInterruptHandler);
 
- */
+*/
 void IOCAF4_DefaultInterruptHandler(void);
 
 
@@ -604,7 +604,7 @@ void IOCAF5_ISR(void);
     PIN_MANAGER_Initialize();
     IOCAF5_SetInterruptHandler(MyInterruptHandler);
 
- */
+*/
 void IOCAF5_SetInterruptHandler(void (* InterruptHandler)(void));
 
 /**
@@ -628,7 +628,7 @@ void IOCAF5_SetInterruptHandler(void (* InterruptHandler)(void));
     PIN_MANAGER_Initialize();
     IOCAF5_SetInterruptHandler(IOCAF5_InterruptHandler);
 
- */
+*/
 extern void (*IOCAF5_InterruptHandler)(void);
 
 /**
@@ -652,7 +652,7 @@ extern void (*IOCAF5_InterruptHandler)(void);
     PIN_MANAGER_Initialize();
     IOCAF5_SetInterruptHandler(IOCAF5_DefaultInterruptHandler);
 
- */
+*/
 void IOCAF5_DefaultInterruptHandler(void);
 
 
@@ -660,4 +660,4 @@ void IOCAF5_DefaultInterruptHandler(void);
 #endif // PIN_MANAGER_H
 /**
  End of File
- */
+*/

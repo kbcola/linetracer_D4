@@ -54,25 +54,72 @@
 
 uint16_t data = 0b1;
 
-void segmentGo(void) {
-    LED_G_PORT = 0;
-    LED_R_PORT = 1;
-    tone(1000);
-    bool head = data & 0x8000;
-    data <<= 1;
-    data |= head;
-    noTone();
-    return;
-}
-
-void segmentCFlip(void) {
-    LED_R_PORT = 0;
-    LED_G_PORT = 1;
-    tone(2000);
-    ledSwapColor();
-    noTone();
-    return;
-}
+//void segmentGo(void) {
+//    LED_G_PORT = 0;
+//    LED_R_PORT = 1;
+//    tone(1000);
+//    bool head = data & 0x8000;
+//    data <<= 1;
+//    data |= head;
+//    noTone();
+//    return;
+//}
+//
+//void segmentCFlip(void) {
+//    LED_R_PORT = 0;
+//    LED_G_PORT = 1;
+//    tone(2000);
+//    ledSwapColor();
+//    noTone();
+//    return;
+//}
+//
+//// for Menu variables
+//bool isTrace = false;
+//uint16_t ledAsobi;
+//bool isSelected1 = false;
+//bool isSelected2 = false;
+//// for Menu variables
+//
+//void obalTrace(void){
+//    SW1SetFunction(startTrace);
+//    SW2SetFunction(startTrace);
+//    ledAsobi = 0b1;
+//    ledChooseR();
+//    TMR1_SetInterruptHandler(startAsobu);
+//    while(!isTrace){ledBright(ledAsobi);
+//    }
+//    //    SW1SetFunction(selectThr);
+//    //    SW2SetFunction(selectThr);
+//    tone(2000);
+//    __delay_ms(200);
+//    tone(1500);
+//    __delay_ms(200);
+//    tone(1000);
+//    __delay_ms(500);
+//    noTone();
+//    onG();
+//    sensorSelector(1);
+//    while(isSelected1) {
+//        uint16_t sens = analogScan();
+//        ledBright(sens << 6);
+//    }
+//    while(1){
+//        
+//    }
+//}
+//
+//void startAsobu(){
+//    bool head=(ledAsobi&0xFFFF)>>15;
+//    ledAsobi<<=1;
+//    ledAsobi|=head;
+//    return;
+//}
+//
+//void startTrace(void){
+//    isTrace = true;
+//    return;
+//}
 
 void main(void) {
     // initialize the device
@@ -93,28 +140,36 @@ void main(void) {
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
 
-    SWSetupISR(); // DO NOT DELETE IT
+    //    SWSetupISR(); // DO NOT DELETE IT
+    //
+    //    LED_G_PORT = 0;
+    //    LED_R_PORT = 1;
+        tone(2000);
+        __delay_ms(200);
+        tone(1000);
+        __delay_ms(200);
+        noTone();
+    //
+    //    LED_R_PORT = 0;
+    //    LED_G_PORT = 1;
+    //    SW1SetFunction(segmentCFlip);
+    //    SW2SetFunction(segmentGo);
+    //
+    //    LED_G_PORT = 0;
+    //    LED_R_PORT = 1;
+    //
+    //    ledChooseG();
 
-    LED_G_PORT = 0;
-    LED_R_PORT = 1;
-    tone(2000);
-    __delay_ms(200);
-    tone(1000);
-    __delay_ms(200);
-    noTone();
-
-    LED_R_PORT = 0;
-    LED_G_PORT = 1;
-    SW1SetFunction(segmentCFlip);
-    SW2SetFunction(segmentGo);
-
-    LED_G_PORT = 0;
-    LED_R_PORT = 1;
-
-    ledChooseG();
-
+    PWM5_Start();
+    PWM6_Start();
+    PWM5_DutyCycleSet(0);
+    PWM6_DutyCycleSet(0);
     while (1) {
-        ledBright(data);
+        //        obalTrace();
+        L_SEL1_PORT = 0;
+        L_SEL2_PORT = 1;
+        R_SEL1_PORT = 0;
+        R_SEL2_PORT = 1;
     }
 }
 /**

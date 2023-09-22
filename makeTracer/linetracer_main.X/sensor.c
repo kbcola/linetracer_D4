@@ -30,7 +30,7 @@ ascanResult analogScan(void) {
 }
 
 dscanResult digitalScan(void) {
-    return CMP1_GetOutputStatus(void);
+    return CMP1_GetOutputStatus();
 }
 
 ascanResult analogScanP(sensorPortNum spn) {
@@ -51,7 +51,7 @@ dscanResult digitalScanP(sensorPortNum spn) {
     SENS_SEL1_PORT = spn >> 1; // Upper bit
     SENS_SEL2_PORT = spn % 2; // Lower bit
     __delay_ms(1); // MUX Wait time
-    dscanResult res = CMP1_GetOutputStatus(void);
+    dscanResult res = CMP1_GetOutputStatus();
     SENS_SEL1_PORT = spnSave >> 1; // Upper bit
     SENS_SEL2_PORT = spnSave % 2; // Lower bit
     __delay_ms(1); // MUX Wait time
@@ -70,7 +70,7 @@ bool checkDigitalThr(uint16_t thr, sensorPortNum spn) {
     SENS_SEL1_PORT = spn >> 1; // Upper bit
     SENS_SEL2_PORT = spn % 2; // Lower bit
     __delay_ms(1); // MUX Wait time
-    dscanResult res = CMP1_GetOutputStatus(void);
+    dscanResult res = CMP1_GetOutputStatus();
     SENS_SEL1_PORT = spnSave >> 1; // Upper bit
     SENS_SEL2_PORT = spnSave % 2; // Lower bit
     __delay_ms(1); // MUX Wait time

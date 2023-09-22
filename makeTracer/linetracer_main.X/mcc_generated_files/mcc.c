@@ -19,7 +19,7 @@
     The generated drivers are tested against the following:
         Compiler          :  XC8 2.36 and above or later
         MPLAB             :  MPLAB X 6.00
- */
+*/
 
 /*
     (c) 2018 Microchip Technology Inc. and its subsidiaries. 
@@ -42,11 +42,13 @@
     CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
- */
+*/
 
 #include "mcc.h"
 
-void SYSTEM_Initialize(void) {
+
+void SYSTEM_Initialize(void)
+{
 
     I2C_Initialize();
     PIN_MANAGER_Initialize();
@@ -64,7 +66,8 @@ void SYSTEM_Initialize(void) {
     TMR1_Initialize();
 }
 
-void OSCILLATOR_Initialize(void) {
+void OSCILLATOR_Initialize(void)
+{
     // SCS FOSC; SPLLEN disabled; IRCF 8MHz_HF; 
     OSCCON = 0x70;
     // SOSCR enabled; 
@@ -75,11 +78,12 @@ void OSCILLATOR_Initialize(void) {
     BORCON = 0x00;
 }
 
-void WDT_Initialize(void) {
+void WDT_Initialize(void)
+{
     // WDTPS 1:65536; SWDTEN OFF; 
     WDTCON = 0x16;
 }
 
 /**
  End of File
- */
+*/

@@ -70,9 +70,9 @@ void DAC1_Initialize(void)
     // DAC1FM right justified; DACEN enabled; DACNSS VSS; DACPSS FVR_buf2; DACOE1 disabled; DACOE2 disabled; 
     DAC1CON0 = 0x88;
     // 
-    DAC1REFH = 0x01;
+    DAC1REFH = 0x00;
     // 
-    DAC1REFL = 0xF4;
+    DAC1REFL = 0xFA;
     //Loading DAC1 double buffer data to latch.
     DAC1_DoubleBufferLatch();
 }
