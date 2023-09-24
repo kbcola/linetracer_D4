@@ -1,0 +1,516 @@
+\documentclass[a4paper]{ltjsarticle}
+
+\usepackage[margin=20mm,bottom=25mm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{here}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{wrapfig}
+\usepackage[hang,small,bf]{caption}
+\usepackage[subrefformat=parens]{subcaption}
+\captionsetup{compatibility=false}
+\usepackage[nobreak]{cite}
+\usepackage[subrefformat=parens]{subcaption}
+
+\usepackage{color}
+
+\newcommand{\maru}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt}{#1}}}}
+
+\newcommand{\bsdisp}[2]{$\mathrm{#1}_{\mathrm{(#2)}}$}
+
+\makeatletter
+\newcommand{\figcap}[1]{\def\@captype{figure}\caption{#1}}
+\newcommand{\tabcap}[1]{\def\@captype{table}\caption{#1}}
+\makeatother
+
+\renewcommand{\lstlistingname}{ソースコード}
+\lstset{
+  basicstyle  = \ttfamily \small,
+  columns     = fixed,
+  basewidth   = .5em,
+  numbers     = left,
+  numberstyle = \ttfamily \small,
+  frame       = tb,
+  % 色
+  commentstyle=\color{green!30!darkgray},
+  keywordstyle=\color{blue},
+  stringstyle=\color{violet!60!gray},
+}
+
+\newcounter{source}
+\lstnewenvironment{source}[2]{
+    \renewcommand{\lstlistingname}{ソースコード}
+    \setcounter{lstlisting}{\value{source}}
+    \lstset{
+        language    = C,
+        basicstyle  = \ttfamily \small,
+        columns     = fixed,
+        basewidth   = .5em,
+        numbers     = left,
+        numberstyle = \ttfamily \small,
+        frame       = tb,
+        caption={[#1]{#1}},
+        label={#2},
+        % 色
+        commentstyle=\color{green!30!darkgray},
+        keywordstyle=\color{blue},
+        stringstyle=\color{violet!60!gray},
+    }
+} {\addtocounter{source}{1}}
+
+\usepackage{luatexja-fontspec}
+\setmainfont[
+    Ligatures=TeX,
+]{TimesNewRoman}
+\setsansfont[
+    Ligatures=TeX,
+]{Nimbus Roman, Bold}
+\setmainjfont[
+    YokoFeatures={JFM=prop},
+    CharacterWidth=Proportional,
+    Kerning=On,
+]{HaranoAjiMincho}
+\setsansjfont[
+    Ligatures=TeX,
+]{HaranoAjiGothic-Medium}
+
+% 限定コマンド実装
+\newcommand{\kasix}{\textbf{K\hspace{-0.31em}\raisebox{0.17em}{\scalebox{0.7}{A}}\hspace{-0.11em}{S}\hspace{-0.08em}\scalebox{0.8}{i}\hspace{-0.1em}X}}
+%表紙
+
+% KASIX
+% Kindness
+% And
+% Simple
+% Included
+% functionCrossFunction
+
+\begin{document}
+
+\kasix
+
+\section{工夫点}
+\subsection{回路}
+\subsubsection{メイン基板}
+\begin{itemize}
+  \item 彩りを加えるため全てのLEDを2色点灯LEDにした
+  \item 電源スイッチ部に直結で2色LEDを置くことにより、今マイコンがONなのか分かりやすいようにした。
+  \item このLEDにより、VDD-GND間が短絡状態にあるかもまた分かる(ONにしたときLEDが消灯した場合に即時に保護が可能)
+  \item 状態表示に便利であると考えたため、16個の円環状LEDを配置
+  \begin{itemize}
+    \item マイコンのポート数が明らかに足りなかったため、シフトレジスタ(74HC595)を用いてカソード側で全LEDのセグメントを制御している
+    \item アノード側は色選択用として各LEDの緑と赤それぞれの端子は他の全ての同色端子と繋がっている
+    \item PIC16F1778のデータシート\cite{ds:picEspI}より、LEDの色制御を直接やるのは電流定格の観点から危険だと判断したため、2SC1815を介している
+    \item 74HC595側はシンク電流が流れるため、データシート\cite{ds:74hc595EspI}から、最大定格を越えないようにLED抵抗値を確定させた
+  \end{itemize}
+  \item 円環状LEDの制御がうまくいかなかった時を考え、直接マイコンポートから制御するLEDが2つ(2色制御のため)存在する
+  \item センサ用コネクタはノイズが乗らないよう、マイコン付近に設置
+  \item 緊急事態に備え、すぐ動作が止められるようリセットスイッチを搭載
+  \item 多目的スイッチを2個搭載
+  \item ブザーを搭載
+  \item 将来拡張性を考慮したため、$\mathrm{I}^\mathrm{2}\mathrm{C}$用EIコネクタを搭載できる
+  \item すぐにデバッグできるよう、PICKit3の直差しを考慮して部品配置を行った
+  \item 基板切削時に左右を間違えないように文字や絵柄を配置
+  \item "QC Pass?"(Quality Check Pass?: 品質チェックパスするかい？)と疑問を投げ掛ける文言により作業時の凡ミス削減を推進、工場に貼り出されている安全第一と同じ役割を持つ
+\end{itemize}
+\subsubsection{センサ基板}
+\begin{itemize}
+  \item センサを8個搭載したため、マイコン側ポートを節約するために4chx2のMUX(4052)を配置
+  \item 調整用ボリュームを各センサ用に8個搭載
+  \item 外側計4つのセンサはPIC内部のコンパレータによるデジタル出力を用いている
+\end{itemize}
+\subsection{プログラム}
+\subsubsection{総合}
+\begin{itemize}
+  \item できるだけ各機能毎に分割した
+  \item MCCの機能をふんだんに活用した
+  \item 機能は制御の根幹に至るところから実装した(LEDならば、まず点灯と色選択、つづいてアニメーション、つづいて値表示という感じ)
+\end{itemize}
+\subsubsection{LED}
+\begin{itemize}
+  \item 色反転が1つの関数で簡単に可能である
+  \item タイマ割り込みを用いて赤と緑の表示データを144Hzで切り替えている
+  \item 赤と緑の同時点灯は許可されていない\cite{ds:led}ので、その対策動作を入れている
+\end{itemize}
+\subsubsection{ブザー}
+\begin{itemize}
+  \item タイマ割り込みを用いて発音させている
+\end{itemize}
+\subsubsection{多目的スイッチ}
+\begin{itemize}
+  \item 外部割り込みを用いて検出させている
+  \item 割り込み動作は関数ポインタを用いて簡単に変更可能
+  \item チャタリング対策専用タイマでチャタリングを監視している
+\end{itemize}
+\subsubsection{直接駆動LED}
+\begin{itemize}
+  \item 赤と緑の同時点灯は許可されていない\cite{ds:led}ので、その対策動作を入れている
+\end{itemize}
+\subsubsection{センサ}
+\begin{itemize}
+  \item MUXの動作間時間が1us未満はある\cite{ds:mux}ため、切り替え動作時に待ち時間を設けている
+  \item 一時的にポートを指定して読み込みができるようにしている
+  \item FVRをADCの基準電圧とすることで微小な信号でも分解能を極端に下げることなく検出できる
+  \item FVRを基準電圧としたDACを用いてコンパレータの閾値調整ができる
+\end{itemize}
+\subsubsection{\kasix システム}
+上記の各モジュールを結合し、統合的に動かせるようにした関数群。main関数を簡素化するために設けた。
+\begin{itemize}
+  \item 各関数の初期化処理を統一して記入し、初期化処理の誤消去による不動を防ぐことができる(\kasix 統合初期化マネージャ)
+  \item センサの閾値調整が可能(\kasix センサコントローラ)
+  \item 状態遷移の管理を一括で行う(\kasix モードコントローラ)
+  \item (将来的に)メニュー画面を作成し、簡単にデバッグが可能になる(\kasix インタフェース)
+\end{itemize}
+
+
+
+\section{反省点}
+\subsection{回路}
+\subsubsection{メイン基板}
+\begin{itemize}
+  \item オシロスコープのデバッグを考慮してピンをつけ足すべきである
+\end{itemize}
+\subsubsection{センサ基板}
+\begin{itemize}
+  \item オシロスコープのデバッグを考慮してピンをつけ足すべきである
+  \item 増幅回路を組むべきである
+\end{itemize}
+\subsection{プログラム}
+以降工事中
+
+\begin{thebibliography}{200}
+ \bibitem{ds:picEspI} Microchip, "PIC16(L)F1777/8/9", p.540 "ELECTRICAL SPECIFICATIONS: Absolute Maximum Ratings" \\ \url{https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/PIC16%28L%29F1777_8_9_Family_Data_Sheet_40001819D.pdf} \\ (閲覧日: 2023年9月9日)
+ \bibitem{ds:74hc595EspI} NISONIC TECHNOLOGIES CO., LTD, "U74HC595A", p.4 "ABSOLUTE MAXIMUM RATING"  \\ \url{http://www.unisonic.com.tw/datasheet/U74HC595A.pdf} (閲覧日: 2023年9月9日)
+ \bibitem{ds:led} 東芝, "LEDランプ GaP赤色発光/GaP緑色発光 TLRG101", p.1 "使用上の注意" \\ \url{https://drive.google.com/file/d/1YiKoFXonvGmeYqzwfWLIdxfVJdQWLeRA/view?usp=share_link} \\ (閲覧日: 2023年9月1日)
+ \bibitem{ds:mux} ON Semiconductor, "MC14051B, MC14052B, MC14053B", p.4 "ELECTRICAL CHARACTERISTIC" \\ \url{https://www.onsemi.jp/pdf/datasheet/mc14051b-d.pdf} (閲覧日: 2023年9月13日)
+\end{thebibliography}
+
+% \section{使用器具}
+% この実験で使用した器具を以下の表\ref{tbl:kigu}に示す．
+
+% \begin{table}[H]
+%   \caption{実験機器一覧}
+%   \label{tbl:kigu}
+%   \centering
+%   \begin{tabular}{cccccc}
+%     \hline \hline
+%     No. & 名称 & メーカー名 & 型名 & シリアル番号 & 備考 \\
+%     \hline
+%     % ファンクションジェネレータ
+%     % KIKUSUI & PMX18-2A & YL000162 \\
+%     % KIKUSUI & PMC18-2 & TJ001258 \\
+%     % 
+%     % マルチメータ
+%     % sanwa & PC5000 & 5145620 \\
+%     % sanwa & PC7000 & 17045100131 \\
+%     % 
+%     % 実験ボード
+%     % NATIONAL INSTRUMENTS & NI ELVIS II +  & 30F6CE1 \\
+%     % 
+%     % オペアンプ
+%     % LM741CN
+%     1 & 実験ボード & National Instruments & \elvis{} & 30F6CE1 & 複数機能有$^1$ \\
+%     2 & オペアンプ & Texas Instruments & \ampua{} CP & - & - \\
+%     3 & 電圧源 & 菊水電子工業株式会社 & PMC18-2A & YL000162 & 入力電力$V_1$用 \\
+%     4 & 電圧源 & 菊水電子工業株式会社 & PMC18-2  & TL001258 & 入力電力$V_2$用 \\
+%     5 & 直流電圧計(DMM) & 三和電気計器株式会社 & PC5000 & 5145620     & 入力電圧測定用 \\
+%     6 & 直流電圧計(DMM) & 三和電気計器株式会社 & PC7000 & 17045100131 & 入力電圧測定用 \\
+%     \hline
+%   \end{tabular}
+%   \\ \leftline{ \footnotesize \hspace{15pt} 1: \elvis{} は計測機器，及び$\pm15$Vの直流電圧源機能を持つ}
+% \end{table}
+
+% \section{結果}
+% 今回実験で使用した各抵抗の実測値を以下の表\ref{tbl:rf}に示す．
+% \begin{table}[H]
+%   \caption{$R_1$，$R_f$の実測値}
+%   \label{tbl:rf}
+%   \centering
+%   \begin{tabular}{cc}
+%     \hline \hline
+%     抵抗名 & 実測値[\si{\kilo \ohm}] \\
+%     \hline
+%     $R_1$ & 9.941 \\
+%     $R_2$ & 9.912 \\
+%     $R_3$ & 99.45 \\
+%     $R_f$ & 99.67 \\
+%     \hline
+%   \end{tabular}
+% \end{table}
+
+% \subsection{加算回路}
+% \subsubsection{理論値}
+% 関係式は，
+% \begin{equation}
+%   V_o=-\left( \frac{R_f}{R_1}V_1 + \frac{R_f}{R_2} V_2 \right)
+% \end{equation}
+% である．
+
+% また，入力電圧$V_1$の実測値は以下の表\ref{tbl:j1vf}のようになった．
+% \begin{table}[H]
+%   \caption{$V_1$の実測値}
+%   \label{tbl:j1vf}
+%   \centering
+%   \begin{tabular}{cc}
+%     \hline \hline 
+%     $V_1[\si{\volt}]$(理論値) & $V_1[\si{\volt}]$(実測値) \\
+%     \hline
+%     0    & 0.072   \\
+%     0.5  & 0.5025  \\
+%     -0.5 & -0.5076 \\
+%     \hline
+%   \end{tabular}
+% \end{table}
+
+% よって，これに代入すると
+% ，$V_1=0[\si{\volt}]$の場合，$V_o=-(10.06 V_2 + 0.722) [\si{\volt}]$
+% ，$V_1=+0.5[\si{\volt}]$の場合，$V_o=-(10.06 V_2 + 5.038) [\si{\volt}]$
+% ，$V_1=-0.5[\si{\volt}]$の場合，$V_o=-(10.06 V_2 - 5.089) [\si{\volt}]$
+% となることがわかる．
+
+% \subsubsection{測定結果}
+% 入力電圧$V_1$が$0\si{\volt}$のときの結果を表\ref{tbl:j1_1}に，
+% $+0.5\si{\volt}$のときの結果を表\ref{tbl:j1_2}に，
+% $-0.5\si{\volt}$のときの結果を表\ref{tbl:j1_3}に示す．
+
+% \begin{table}[H]
+%   \begin{minipage}[t]{.45\textwidth}
+%     \caption{$V_1=0[\si{\volt}]$の場合の結果}
+%     \label{tbl:j1_1}
+%     \centering
+%     \begin{tabular}{c|cc}
+%       \hline \hline
+%       入力電圧$V_2$ [\si{\volt}] & 出力電圧$V_o$ [\si{\volt}] & 理論値 [\si{\volt}] \\
+%       \hline
+%       2.0020  & -13.694 &  -20.853 \\
+%       1.5073  & -13.964 &  -15.879 \\
+%       1.4060  & -13.696 &  -14.860 \\
+%       1.3005  & -13.035 &  -13.799 \\
+%       1.2025  & -12.058 &  -12.814 \\
+%       1.0070  & -10.110 &  -10.848 \\
+%       0.5084  & -5.137  &   -5.834 \\
+%       0.0005  & -0.049  &   -0.727 \\
+%       -0.0020 & -0.061  &   -0.702 \\
+%       -0.5019 & 4.975   &   4.325  \\
+%       -1.0035 & 9.987   &   9.369  \\
+%       -1.2012 & 11.960  &   11.357 \\
+%       -1.2992 & 12.941  &   12.342 \\
+%       -1.4052 & 14.000  &   13.408 \\
+%       -1.5042 & 14.859  &   14.404 \\
+%       -2.0036 & 14.859  &   19.425 \\
+%       \hline
+%     \end{tabular}
+%   \end{minipage}
+%   %
+%   \hfill
+%   %
+%   \begin{minipage}[t]{.45\textwidth}
+%     \caption{$V_1=+0.5[\si{\volt}]$の場合の結果}
+%     \label{tbl:j1_2}
+%     \centering
+%     \begin{tabular}{c|cc}
+%       \hline \hline
+%       入力電圧$V_2$ [\si{\volt}] & 出力電圧$V_o$ [\si{\volt}] & 理論値 [\si{\volt}] \\
+%       \hline
+%       1.9998  & -13.7  & -25.147   \\
+%       1.5010  & -13.7  & -20.131   \\
+%       0.9996  & -13.7  & -15.090   \\
+%       0.9032  & -13.702 &  -14.120 \\
+%       0.8018  & -13.033 &  -13.101 \\
+%       0.7057  & -12.075 &  -12.134 \\
+%       0.5984  & -10.995 &  -11.055 \\
+%       0.4958  & -9.981 &   -10.024 \\
+%       0.0077  & -5.107 &   -5.116  \\
+%       -0.0006 & -5.01  & -5.032    \\
+%       -0.4990 & -0.041 &   -0.020  \\
+%       -1.0062 & 5.027  & 5.080     \\
+%       -1.5010 & 9.97   & 10.055    \\
+%       -1.5980 & 10.942 &   11.031  \\
+%       -1.6991 & 11.951 &   12.047  \\
+%       -1.8042 & 13   & 13.104      \\
+%       -1.8975 & 13.93  & 14.042    \\
+%       -2.0024 & 14.863 &   15.097  \\
+%       \hline
+%     \end{tabular}
+%   \end{minipage}
+% \end{table}
+
+% \begin{table}[H]
+%   \caption{$V_1=-0.5[\si{\volt}]$の場合の結果}
+%   \label{tbl:j1_3}
+%   \centering
+%   \begin{tabular}{c|cc}
+%     \hline \hline
+%     入力電圧$V_2$ [\si{\volt}] & 出力電圧$V_o$ [\si{\volt}] & 理論値 [\si{\volt}] \\
+%     \hline
+%     2.0054  &  -13.702 & -15.076 \\
+%     1.9034  &  -13.702 & -14.050 \\
+%     1.801 - & 12.969   & -13.021 \\
+%     1.7028  &  -11.976 & -12.033 \\
+%     1.6     & -10.959  & -11.000 \\
+%     1.5074  &  -10.036 & -10.068 \\
+%     1.0018  &  -4.994  & -4.984  \\
+%     0.5098  &  -0.072  & -0.037  \\
+%     0.0007  &  5.01    &  5.082  \\
+%     -0.0037 &  5.059   &  5.126  \\
+%     -0.4958 &  9.975   &  10.075 \\
+%     -0.5977 &  10.99   &  11.099 \\
+%     -0.7055 &  12.071  & 12.183  \\
+%     -0.8047 &  13.058  & 13.181  \\
+%     -0.9035 &  14.048  & 14.174  \\
+%     -1.0014 &  14.865  & 15.159  \\
+%     -2.0083 &  14.863  & 25.284  \\
+%     \hline
+%   \end{tabular}
+% \end{table}
+
+% また，全ての場合の測定結果と理論値をまとめたグラフを以下の図\ref{fig:j1}に示す．
+% \begin{figure}[H]
+%     \centering{\includegraphics[keepaspectratio, width=13cm]{tbls/j1_graph.png}}
+%     \caption{加算回路の特性と理論値}
+%     \label{fig:j1}
+% \end{figure}
+
+% これらから，$V_2$に$V_1$が加算されていることがわかる．
+
+% \subsection{減算回路}
+% \subsubsection{理論値}
+% 関係式は，
+% \begin{equation}
+%   V_o=- \frac{R_f}{R_1}V_1 + \frac{R_3(R_1 + R_f)}{R_1(R_2 + R_3)} V_2 
+% \end{equation}
+% である．
+
+% また，入力電圧$V_1$の実測値は以下の表\ref{tbl:j2vf}のようになった．
+% \begin{table}[H]
+%   \caption{$V_1$の実測値}
+%   \label{tbl:j2vf}
+%   \centering
+%   \begin{tabular}{cc}
+%     \hline \hline 
+%     $V_1[\si{\volt}]$(理論値) & $V_1[\si{\volt}]$(実測値) \\
+%     \hline
+%     0    & 0.0026  \\
+%     0.5  & 0.5019  \\
+%     -0.5 & -0.5018 \\
+%     \hline
+%   \end{tabular}
+% \end{table}
+
+% よって，これに代入すると
+% ，$V_1=0[\si{\volt}]$の場合，$V_o=10.03 V_2 - 0.026 [\si{\volt}]$
+% ，$V_1=+0.5[\si{\volt}]$の場合，$V_o=10.03 V_2 - 5.032 [\si{\volt}]$
+% ，$V_1=-0.5[\si{\volt}]$の場合，$V_o=10.03 V_2 + 5.031 [\si{\volt}]$
+% となることがわかる．
+
+% \subsubsection{測定結果}
+% 入力電圧$V_1$が$0\si{\volt}$のときの結果を表\ref{tbl:j2_1}に，
+% $+0.5\si{\volt}$のときの結果を表\ref{tbl:j2_2}に，
+% $-0.5\si{\volt}$のときの結果を表\ref{tbl:j2_3}に示す．
+
+% \begin{table}[H]
+%   \begin{minipage}[t]{.45\textwidth}
+%     \caption{$V_1=0[\si{\volt}]$の場合の結果}
+%     \label{tbl:j2_1}
+%     \centering
+%     \begin{tabular}{c|cc}
+%       \hline \hline
+%       入力電圧$V_2$ [\si{\volt}] & 出力電圧$V_o$ [\si{\volt}] & 理論値 [\si{\volt}] \\
+%       \hline
+%       2.0087  & 14.868 &   20.115  \\
+%       1.6007  & 14.869 &   16.024  \\
+%       1.4978  & 14.674 &   14.992  \\
+%       1.4056  & 13.767 &   14.068  \\
+%       1.2998  & 12.734 &   13.007  \\
+%       1.2039  & 11.791 &   12.045  \\
+%       1.1005  & 10.777 &   11.008  \\
+%       1.0000  & 9.795  & 10.001    \\
+%       0.5049  & 4.946  & 5.036     \\
+%       0.0004  & 0.017  & -0.022    \\
+%       -0.0076 & -0.102 &   -0.102  \\
+%       -0.5062 & -5.088 &   -5.102  \\
+%       -1.0026 & -10.061 &  -10.079 \\
+%       -1.1980 & -12.013 &  -12.038 \\
+%       -1.3038 & -13.067 &  -13.099 \\
+%       -1.4019 & -13.703 &  -14.083 \\
+%       -1.5039 & -13.703 &  -15.105 \\
+%       -1.9973 & -13.703 &  -20.053 \\
+%       \hline
+%     \end{tabular}
+%   \end{minipage}
+%   %
+%   \hfill
+%   %
+%   \begin{minipage}[t]{.45\textwidth}
+%     \caption{$V_1=+0.5[\si{\volt}]$の場合の結果}
+%     \label{tbl:j2_2}
+%     \centering
+%     \begin{tabular}{c|cc}
+%       \hline \hline
+%       入力電圧$V_2$ [\si{\volt}] & 出力電圧$V_o$ [\si{\volt}] & 理論値 [\si{\volt}] \\
+%       \hline
+%       2.0053  & 14.87  & 15.075    \\
+%       1.9031  & 14.023 &   14.050  \\
+%       1.8046  & 13.032 &   13.062  \\
+%       1.7058  & 12.072 &   12.072  \\
+%       1.5035  & 10.025 &   10.043  \\
+%       0.9967  & 4.962  & 4.962     \\
+%       0.5078  & 0.058  & 0.059     \\
+%       0.0094  & -4.929 &  -4.938   \\
+%       -0.0039 & -5.063 &   -5.071  \\
+%       -0.5047 & -10.077 &  -10.093 \\
+%       -0.6948 & -11.979 &  -11.999 \\
+%       -0.8078 & -13.109 &  -13.132 \\
+%       -0.9006 & -13.703 &  -14.062 \\
+%       -1.0018 & -13.703 &  -15.077 \\
+%       -1.9988 & -13.703 &  -25.074 \\
+%       \hline
+%     \end{tabular}
+%   \end{minipage}
+% \end{table}
+
+% \begin{table}[H]
+%   \caption{$V_1=-0.5[\si{\volt}]$の場合の結果}
+%   \label{tbl:j2_3}
+%   \centering
+%   \begin{tabular}{c|cc}
+%     \hline \hline
+%     入力電圧$V_2$ [\si{\volt}] & 出力電圧$V_o$ [\si{\volt}] & 理論値 [\si{\volt}] \\
+%     \hline
+%     2.0000  & 14.869  & 25.085  \\
+%     1.0084  & 14.869  & 15.142  \\
+%     0.895   & 13.98   & 14.005  \\
+%     0.796   & 12.989  & 13.012  \\
+%     0.6939  & 11.969  & 11.989  \\
+%     0.502   & 10.043  & 10.065  \\
+%     0.0069  & 5.095   &  5.100  \\
+%     -0.0038 & 4.98    &  4.993  \\
+%     -0.5056 & -0.037  & -0.038  \\
+%     -1.003  & -5.018  & -5.026  \\
+%     -1.4983 & -9.97   & -9.992  \\
+%     -1.6997 & -11.989 & -12.011 \\
+%     -1.7983 & -12.973 & -13.000 \\
+%     -1.9001 & -13.705 & -14.021 \\
+%     -1.9938 & -13.705 & -14.960 \\
+%     \hline
+%   \end{tabular}
+% \end{table}
+
+% また，全ての場合の測定結果と理論値をまとめたグラフを以下の図\ref{fig:j2}に示す．
+% \begin{figure}[H]
+%     \centering{\includegraphics[keepaspectratio, width=13cm]{tbls/j2_graph.png}}
+%     \caption{減算回路の特性と理論値}
+%     \label{fig:j2}
+% \end{figure}
+
+% これらから，$V_2$から$V_1$が減算されていることがわかる．
+
+\end{document}
