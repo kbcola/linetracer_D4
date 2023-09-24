@@ -1,0 +1,91 @@
+\documentclass[a4paper]{ltjsarticle}
+
+\usepackage[margin=20mm,bottom=25mm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage{here}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{wrapfig}
+\usepackage[hang,small,bf]{caption}
+\usepackage[subrefformat=parens]{subcaption}
+\captionsetup{compatibility=false}
+\usepackage[nobreak]{cite}
+\usepackage[subrefformat=parens]{subcaption}
+
+\usepackage{color}
+
+\newcommand{\maru}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt}{#1}}}}
+
+\newcommand{\bsdisp}[2]{$\mathrm{#1}_{\mathrm{(#2)}}$}
+
+\makeatletter
+\newcommand{\figcap}[1]{\def\@captype{figure}\caption{#1}}
+\newcommand{\tabcap}[1]{\def\@captype{table}\caption{#1}}
+\makeatother
+
+\renewcommand{\lstlistingname}{ソースコード}
+\lstset{
+  basicstyle  = \ttfamily \small,
+  columns     = fixed,
+  basewidth   = .5em,
+  numbers     = left,
+  numberstyle = \ttfamily \small,
+  frame       = tb,
+  % 色
+  commentstyle=\color{green!30!darkgray},
+  keywordstyle=\color{blue},
+  stringstyle=\color{violet!60!gray},
+}
+
+\newcounter{source}
+\lstnewenvironment{source}[2]{
+    \renewcommand{\lstlistingname}{ソースコード}
+    \setcounter{lstlisting}{\value{source}}
+    \lstset{
+        language    = C,
+        basicstyle  = \ttfamily \small,
+        columns     = fixed,
+        basewidth   = .5em,
+        numbers     = left,
+        numberstyle = \ttfamily \small,
+        frame       = tb,
+        caption={[#1]{#1}},
+        label={#2},
+        % 色
+        commentstyle=\color{green!30!darkgray},
+        keywordstyle=\color{blue},
+        stringstyle=\color{violet!60!gray},
+    }
+} {\addtocounter{source}{1}}
+
+\usepackage{luatexja-fontspec}
+\setmainfont[
+    Ligatures=TeX,
+]{TimesNewRoman}
+\setsansfont[
+    Ligatures=TeX,
+]{Nimbus Roman, Bold}
+\setmainjfont[
+    YokoFeatures={JFM=prop},
+    CharacterWidth=Proportional,
+    Kerning=On,
+]{HaranoAjiMincho}
+\setsansjfont[
+    Ligatures=TeX,
+]{HaranoAjiGothic-Medium}
+
+% 限定コマンド実装
+\newcommand{\kasix}{\textbf{K\hspace{-0.31em}\raisebox{0.17em}{\scalebox{0.7}{A}}\hspace{-0.11em}{S}\hspace{-0.08em}\scalebox{0.8}{i}\hspace{-0.1em}X}}
+%表紙
+
+\begin{document}
+\scalebox{5}{\kasix}\hspace{10pt}\scalebox{2.3}{\raisebox{0.8em}{Inside}}\hspace{-60pt}\scalebox{1.5}{\scalebox{0.6}{\texttt{Release}}\ \texttt{0.0}}
+\end{document}

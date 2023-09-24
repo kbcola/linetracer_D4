@@ -97,6 +97,22 @@
 
 \kasix
 
+\section{取扱に関する説明状}
+\subsection{アナログセンサの取り扱い}
+\begin{enumerate}
+  \item 起動すると、環状LEDがセンサの現在値を表示します。
+  \item 各フェーズの検測を実施するには緑か赤のスイッチを押してください。
+  \item 検測中には死にそうなセミの声のような音がします。
+  \item 開始から終了までの順序を以下に示します。1側、2側はご自身でお確かめください。
+  \begin{enumerate}
+    \item 1側\textbf{白}部分の検測
+    \item 1側\textbf{黒}部分の検測
+    \item 2側\textbf{白}部分の検測
+    \item 2側\textbf{黒}部分の検測
+  \end{enumerate}
+  \item ちなみに白黒の順番を間違えると警告されます。
+\end{enumerate}
+
 \section{工夫点}
 \subsection{回路}
 \subsubsection{メイン基板}
@@ -160,6 +176,8 @@
   \item 一時的にポートを指定して読み込みができるようにしている
   \item FVRをADCの基準電圧とすることで微小な信号でも分解能を極端に下げることなく検出できる
   \item FVRを基準電圧としたDACを用いてコンパレータの閾値調整ができる
+  \item 制御時の白と黒の値を事前に登録し、最適な制御を行うようにすることができる
+  \item 登録した白と黒の値が間違っていたら警告される
 \end{itemize}
 \subsubsection{\kasix システム}
 上記の各モジュールを結合し、統合的に動かせるようにした関数群。main関数を簡素化するために設けた。
@@ -185,6 +203,29 @@
 \end{itemize}
 \subsection{プログラム}
 以降工事中
+
+\section{制御の考え方}
+センサ1の最大値を$S_{1H}$、最小値を$S_{1L}$、センサ2の最大値を$S_{2H}$、最小値を$S_{2L}$とする。
+今、センサが読んでいる値はそれぞれ$s_{1},s_{2}$であると仮定する。
+各値幅$W_{n}$はそれぞれ$S_{nH}-S_{nL}$によって定まる。
+
+まず、0に揃える。
+\begin{equation}
+  s^{0|}_{n} = s_n-S_{nL}
+\end{equation}
+
+しかし、これでは比較が難しい。そこで、2つの幅を1で揃えてしまおう。
+今の値$s^{0|}_{n}$は最大値の何割を占めているか$(p_n)$はこの式で分かる。
+\begin{equation}
+  p_n=\frac{s^{0|}_n}{W_n}
+\end{equation}
+これは幅が1の場合のセンサ値と同等の意味を持つ。(この式の最大値は1なので)
+
+あとは、
+\begin{equation}
+  \Delta s = s_2-s_1
+\end{equation}
+を計算し、ゲインをかけて駆動させればハイ完成である。
 
 \begin{thebibliography}{200}
  \bibitem{ds:picEspI} Microchip, "PIC16(L)F1777/8/9", p.540 "ELECTRICAL SPECIFICATIONS: Absolute Maximum Ratings" \\ \url{https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/PIC16%28L%29F1777_8_9_Family_Data_Sheet_40001819D.pdf} \\ (閲覧日: 2023年9月9日)

@@ -45,13 +45,6 @@
 
 #include "mcc_generated_files/mcc.h"
 
-#include "16x2led.h"
-#include "buzzer.h"
-#include "switchHandler.h"
-#include "sensor.h"
-#include "directLED.h"
-#include "animation.h"
-#include "motordrive.h"
 #include "kasix.h"
 
 /*
@@ -80,7 +73,9 @@ void main(void) {
     kasixInitialize();
 
     kasixSensorThrControl();
-    kasixStandardTrace();
+    //    kasixSensorDThrControl();
+    //    kasixStandardTrace();
+    kasixProportionalTrace();
 }
 /**
  End of File
