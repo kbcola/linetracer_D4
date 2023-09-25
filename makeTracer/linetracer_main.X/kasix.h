@@ -36,7 +36,10 @@ extern "C" {
     void kasixStandardTrace(void);
 
     void kasixProportionalTrace(void);
+    
+    void kasixProportionalTraceOneside(void);
 
+    void kasixMotorTester(void);
 
 
 #ifdef	__cplusplus

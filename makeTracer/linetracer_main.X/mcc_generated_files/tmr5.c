@@ -1,17 +1,17 @@
 /**
-  TMR1 Generated Driver File
+  TMR5 Generated Driver File
 
   @Company
     Microchip Technology Inc.
 
   @File Name
-    tmr1.c
+    tmr5.c
 
   @Summary
-    This is the generated driver implementation file for the TMR1 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+    This is the generated driver implementation file for the TMR5 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
   @Description
-    This source file provides APIs for TMR1.
+    This source file provides APIs for TMR5.
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
         Device            :  PIC16F1778
@@ -49,139 +49,146 @@
 */
 
 #include <xc.h>
-#include "tmr1.h"
+#include "tmr5.h"
 
 /**
   Section: Global Variables Definitions
 */
-volatile uint16_t timer1ReloadVal;
-void (*TMR1_InterruptHandler)(void);
+volatile uint16_t timer5ReloadVal;
+void (*TMR5_InterruptHandler)(void);
 
 /**
-  Section: TMR1 APIs
+  Section: TMR5 APIs
 */
 
-void TMR1_Initialize(void)
+void TMR5_Initialize(void)
 {
     //Set the Timer to the options selected in the GUI
 
-    //GSS T1G_pin; TMR1GE disabled; T1GTM disabled; T1GPOL low; T1GGO_nDONE done; T1GSPM disabled; 
-    T1GCON = 0x00;
+    //GSS T5G_pin; TMR5GE disabled; T5GTM disabled; T5GPOL low; T5GGO_nDONE done; T5GSPM disabled; 
+    T5GCON = 0x00;
 
-    //TMR 248; 
-    TMR1H = 0xF8;
+    //TMR 60; 
+    TMR5H = 0x3C;
 
-    //TMR 48; 
-    TMR1L = 0x30;
+    //TMR 176; 
+    TMR5L = 0xB0;
 
     // Clearing IF flag before enabling the interrupt.
-    PIR1bits.TMR1IF = 0;
+    PIR4bits.TMR5IF = 0;
 
     // Load the TMR value to reload variable
-    timer1ReloadVal=(uint16_t)((TMR1H << 8) | TMR1L);
+    timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
 
-    // Enabling TMR1 interrupt.
-    PIE1bits.TMR1IE = 1;
+    // Enabling TMR5 interrupt.
+    PIE4bits.TMR5IE = 1;
 
     // Set Default Interrupt Handler
-    TMR1_SetInterruptHandler(TMR1_DefaultInterruptHandler);
+    TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
 
-    // CKPS 1:1; T1OSCEN disabled; nT1SYNC synchronize; CS FOSC/4; TMR1ON enabled; 
-    T1CON = 0x01;
+    // CKPS 1:1; T5OSCEN disabled; nT5SYNC synchronize; CS FOSC/4; TMR5ON enabled; 
+    T5CON = 0x01;
 }
 
-void TMR1_StartTimer(void)
+void TMR5_StartTimer(void)
 {
     // Start the Timer by writing to TMRxON bit
-    T1CONbits.TMR1ON = 1;
+    T5CONbits.TMR5ON = 1;
 }
 
-void TMR1_StopTimer(void)
+void TMR5_StopTimer(void)
 {
     // Stop the Timer by writing to TMRxON bit
-    T1CONbits.TMR1ON = 0;
+    T5CONbits.TMR5ON = 0;
 }
 
-uint16_t TMR1_ReadTimer(void)
+uint16_t TMR5_ReadTimer(void)
 {
     uint16_t readVal;
     uint8_t readValHigh;
     uint8_t readValLow;
     
 	
-    readValLow = TMR1L;
-    readValHigh = TMR1H;
+    readValLow = TMR5L;
+    readValHigh = TMR5H;
     
     readVal = ((uint16_t)readValHigh << 8) | readValLow;
 
     return readVal;
 }
 
-void TMR1_WriteTimer(uint16_t timerVal)
+void TMR5_WriteTimer(uint16_t timerVal)
 {
-    if (T1CONbits.nT1SYNC == 1)
+    if (T5CONbits.nT5SYNC == 1)
     {
         // Stop the Timer by writing to TMRxON bit
-        T1CONbits.TMR1ON = 0;
+        T5CONbits.TMR5ON = 0;
 
-        // Write to the Timer1 register
-        TMR1H = (uint8_t)(timerVal >> 8);
-        TMR1L = (uint8_t)timerVal;
+        // Write to the Timer5 register
+        TMR5H = (uint8_t)(timerVal >> 8);
+        TMR5L = (uint8_t)timerVal;
 
         // Start the Timer after writing to the register
-        T1CONbits.TMR1ON =1;
+        T5CONbits.TMR5ON =1;
     }
     else
     {
-        // Write to the Timer1 register
-        TMR1H = (uint8_t)(timerVal >> 8);
-        TMR1L = (uint8_t)timerVal;
+        // Write to the Timer5 register
+        TMR5H = (uint8_t)(timerVal >> 8);
+        TMR5L = (uint8_t)timerVal;
     }
 }
 
-void TMR1_Reload(void)
+void TMR5_Reload(void)
 {
-    TMR1_WriteTimer(timer1ReloadVal);
+    TMR5_WriteTimer(timer5ReloadVal);
 }
 
-void TMR1_StartSinglePulseAcquisition(void)
+void TMR5_StartSinglePulseAcquisition(void)
 {
-    T1GCONbits.T1GGO_nDONE = 1;
+    T5GCONbits.T5GGO_nDONE = 1;
 }
 
-uint8_t TMR1_CheckGateValueStatus(void)
+uint8_t TMR5_CheckGateValueStatus(void)
 {
-    return (T1GCONbits.T1GVAL);
+    return (T5GCONbits.T5GVAL);
 }
 
-void TMR1_ISR(void)
+void TMR5_ISR(void)
 {
+    static volatile unsigned int CountCallBack = 0;
 
-    // Clear the TMR1 interrupt flag
-    PIR1bits.TMR1IF = 0;
-    TMR1_WriteTimer(timer1ReloadVal);
+    // Clear the TMR5 interrupt flag
+    PIR4bits.TMR5IF = 0;
+    TMR5_WriteTimer(timer5ReloadVal);
 
-    // ticker function call;
-    // ticker is 1 -> Callback function gets called everytime this ISR executes
-    TMR1_CallBack();
+    // callback function - called every 20th pass
+    if (++CountCallBack >= TMR5_INTERRUPT_TICKER_FACTOR)
+    {
+        // ticker function call
+        TMR5_CallBack();
+
+        // reset ticker counter
+        CountCallBack = 0;
+    }
 }
 
-void TMR1_CallBack(void)
+void TMR5_CallBack(void)
 {
     // Add your custom callback code here
-    if(TMR1_InterruptHandler)
+    if(TMR5_InterruptHandler)
     {
-        TMR1_InterruptHandler();
+        TMR5_InterruptHandler();
     }
 }
 
-void TMR1_SetInterruptHandler(void (* InterruptHandler)(void)){
-    TMR1_InterruptHandler = InterruptHandler;
+void TMR5_SetInterruptHandler(void (* InterruptHandler)(void)){
+    TMR5_InterruptHandler = InterruptHandler;
 }
 
-void TMR1_DefaultInterruptHandler(void){
-    // add your TMR1 interrupt custom code
-    // or set custom function using TMR1_SetInterruptHandler()
+void TMR5_DefaultInterruptHandler(void){
+    // add your TMR5 interrupt custom code
+    // or set custom function using TMR5_SetInterruptHandler()
 }
 
 /**

@@ -73,9 +73,11 @@ void main(void) {
     kasixInitialize();
 
     kasixSensorThrControl();
-    //    kasixSensorDThrControl();
+    kasixSensorDThrControl();
     //    kasixStandardTrace();
-    kasixProportionalTrace();
+    kasixProportionalTraceOneside();
+
+    //    kasixMotorTester();
 }
 /**
  End of File

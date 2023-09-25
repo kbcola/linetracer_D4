@@ -74,6 +74,10 @@
          <string>class com.microchip.mcc.mcu8.modules.tmr2.TMR2</string>
       </entry>
       <entry>
+         <string>TMR5</string>
+         <string>class com.microchip.mcc.mcu8.modules.tmr1.TMR1</string>
+      </entry>
+      <entry>
          <string>WDT</string>
          <string>class com.microchip.mcc.mcu8.systemManager.wdt.WDT</string>
       </entry>
@@ -844,7 +848,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="CMP1" registerAlias="CMCON1"/>
-         <value>0</value>
+         <value>2</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="CMP1" registerAlias="CMNSEL"/>
@@ -904,7 +908,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="CMP1" registerAlias="CMCON1" settingAlias="CINTP"/>
-         <value>no_intFlag</value>
+         <value>intFlag_pos</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="CMP1" registerAlias="CMNSEL" settingAlias="CNCH"/>
@@ -2803,31 +2807,39 @@
          <value>enabled</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T0CKIPPS%aux0"/>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T0CKIPPS%aux6"/>
          <value>%DESELECT%</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T1CKIPPS%aux3"/>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T1CKIPPS%aux1"/>
          <value>%DESELECT%</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T1GPPS%aux4"/>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T1GPPS%aux2"/>
          <value>%DESELECT%</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T2INPPS%aux2"/>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T2INPPS%aux3"/>
          <value>%DESELECT%</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T3CKIPPS%aux5"/>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T3CKIPPS%aux4"/>
          <value>%DESELECT%</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T3GPPS%aux6"/>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T3GPPS%aux5"/>
          <value>%DESELECT%</value>
       </entry>
       <entry>
-         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T4INPPS%aux1"/>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T4INPPS%aux0"/>
+         <value>%DESELECT%</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T5CKIPPS%aux7"/>
+         <value>%DESELECT%</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="T5GPPS%aux8"/>
          <value>%DESELECT%</value>
       </entry>
       <entry>
@@ -8883,6 +8895,298 @@
          <value>0</value>
       </entry>
       <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="CallbackFuncRate"/>
+         <value>0.5</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="ExternalFrequency"/>
+         <value>32768</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="OSI"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="OSO"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="TMR5_TMRGIISRFunction"/>
+         <value>GATE_ISR</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="TMR5_TMRIISRFunction"/>
+         <value>ISR</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="clockFreq"/>
+         <value>8000000</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="dependentModuleKey"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="gatePin"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="inputMode"/>
+         <value>periodMode</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="reloadValue"/>
+         <value>15536</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="tckiPin"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="tickerFactor"/>
+         <value>20</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="timerClockActual"/>
+         <value>40</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="timerPeriod"/>
+         <value>0.025</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="timerPeriodActual"/>
+         <value>0.025</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="timerPeriodMax"/>
+         <value>0.032768</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="timerPeriodMin"/>
+         <value>0.0000005</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="TMR5" name="timerstart"/>
+         <value>enabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TCKPS" alias="1:1"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TCKPS" alias="1:2"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TCKPS" alias="1:4"/>
+         <value>2</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TCKPS" alias="1:8"/>
+         <value>3</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TMRCS" alias="External"/>
+         <value>2</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TMRCS" alias="FOSC"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TMRCS" alias="FOSC/4"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TMRCS" alias="LFINTOSC"/>
+         <value>3</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TMRON" alias="disabled"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TMRON" alias="enabled"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TOSCEN" alias="disabled"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TOSCEN" alias="enabled"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="nTSYNC" alias="do_not_synchronize"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TCON" settingAlias="nTSYNC" alias="synchronize"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGGO" alias="done"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGGO" alias="ready"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGPOL" alias="high"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGPOL" alias="low"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGSPM" alias="disabled"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGSPM" alias="enabled"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGSS" alias="SYNC_C1OUT"/>
+         <value>2</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGSS" alias="SYNC_C2OUT"/>
+         <value>3</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGSS" alias="T5G_pin"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGSS" alias="TMR0"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGTM" alias="disabled"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGTM" alias="enabled"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGVAL" alias="disabled"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGVAL" alias="enabled"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TMRGE" alias="disabled"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TMRGE" alias="enabled"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="TMR5" registerAlias="TCON"/>
+         <value>1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="TMR5" registerAlias="TGCON"/>
+         <value>0</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="TMR5" registerAlias="TMRH"/>
+         <value>60</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="TMR5" registerAlias="TMRL"/>
+         <value>176</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TCKPS"/>
+         <value>1:1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TMRCS"/>
+         <value>FOSC/4</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TMRON"/>
+         <value>enabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TCON" settingAlias="TOSCEN"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TCON" settingAlias="nTSYNC"/>
+         <value>synchronize</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGGO"/>
+         <value>done</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGPOL"/>
+         <value>low</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGSPM"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGSS"/>
+         <value>T5G_pin</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGTM"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TGVAL"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TGCON" settingAlias="TMRGE"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TMRGI" settingAlias="enable"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TMRGI" settingAlias="flag"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TMRGI" settingAlias="order"/>
+         <value>-1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TMRH" settingAlias="TMRH"/>
+         <value>60</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TMRI" settingAlias="enable"/>
+         <value>enabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TMRI" settingAlias="flag"/>
+         <value>disabled</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TMRI" settingAlias="order"/>
+         <value>-1</value>
+      </entry>
+      <entry>
+         <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="TMR5" registerAlias="TMRL" settingAlias="TMRL"/>
+         <value>176</value>
+      </entry>
+      <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="WDT" name="wdtPeriod"/>
          <value>2.11406</value>
       </entry>
@@ -8986,151 +9290,159 @@
    <generatedFileHashHistoryMap class="java.util.HashMap">
       <entry>
          <file>mcc_generated_files/interrupt_manager.h</file>
-         <hash>9012abbe4e0e4c2ec0331920b6474bca52d4937407a3a4248e9743f4cf86ddd5</hash>
+         <hash>1947090d4f2a2536c2685ac67da81bfc280623ae9bb2281f4e94e1379aa49638</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/adc.h</file>
-         <hash>3433269d367e8cfac4922a001c44a22f5898a68b734be4a4378707a50c5b26bc</hash>
+         <hash>dfe2952c1b3ae801f7d0a9b5342be08acef008218a4f203f109a91f771587ddd</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/dac1.h</file>
-         <hash>e7873e16a354d6b434b6112ff4d7c70eee9f39c2600cceb5cf55d966f0e711d9</hash>
-      </entry>
-      <entry>
-         <file>mcc_generated_files/cmp1.c</file>
-         <hash>e9b2150eaf58e214fe3de35b9067fdeb288751d12a0246d44677e87a24975ad0</hash>
+         <hash>fdfb3c9392389c9b71ea932296d32658bd1bd78d1991f5ea9ef4992a51348409</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/mcc.h</file>
-         <hash>882b2a7e19b3c45a78d2069e01fbdd16d9f9dcbe2038f476ab9f2e31388e5071</hash>
+         <hash>4a7996f198fb29c09603285cfb76193f9435e585f2278bab74a3df40c62b6924</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files/interrupt_manager.c</file>
-         <hash>d3ecf4da90881ad47d5bc3e23b353a008bdd4ec95b837cc23c22110e6ad2b2e2</hash>
-      </entry>
-      <entry>
-         <file>mcc_generated_files/dac1.c</file>
-         <hash>d44b6e4a0211289ff3f2dc761e072ebacdbd13187b89f113f8406a62f74ef31b</hash>
+         <file>mcc_generated_files/cmp1.c</file>
+         <hash>6ded062b8617c40a9d482b8ed1fe74633e596ff32f42437dd3075ad4e9575320</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/pwm3.h</file>
-         <hash>8b443c896137cd0baa030ed150cf36ed121dfb6400f871c6d48c365718028f90</hash>
+         <hash>cc7412a8fd3a372cc104fec008b25b8cf7ba27e2803075b50a98d3f27d16b1b8</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files/pwm4.h</file>
-         <hash>496032fd50aea4e75af773053eb42715846c1194cf5b1f52e7ce014956c8b9dd</hash>
+         <file>mcc_generated_files/dac1.c</file>
+         <hash>669a6587b95f3d0af5749bccd3c62415c5886c814ba410e88385fa90e692ceef</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files/cmp1.h</file>
-         <hash>4f590427b0761d12dbd33d6586a34a526575f67164536089b086acdb9d1f386f</hash>
-      </entry>
-      <entry>
-         <file>mcc_generated_files/fvr.h</file>
-         <hash>4ea2773dac490e21f30967b7af978d8b79429b66d7c76f08dbc33cc98aec4a85</hash>
+         <file>mcc_generated_files/interrupt_manager.c</file>
+         <hash>7f710ecb0205a59c47cab9ea97ba4d52782dce1bbbf60decfe9d042c5f492303</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/mcc.c</file>
-         <hash>80be71444d41d3fff3cc4c338bf477c18d9b06f44848a76cf373891f65663a38</hash>
+         <hash>9d4a76af525883dfb442b7df744630d69103f1a1201068c806b5bc59d5238754</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files/pwm4.h</file>
+         <hash>4a2ba1e4ec44d3e45b388eb170aa8819bc3d9650e1fbd6b199ee8a04d10e4d24</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files/cmp1.h</file>
+         <hash>65197c242c9e2ad5753020d322e9c1b32a045c26d7feb328ec0f2df35413ccdc</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files/fvr.h</file>
+         <hash>2f28ffed80b543c20684dfc4b357d087fd94ec9d4772cd25d070a486d5b78697</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/pin_manager.c</file>
-         <hash>b5d271eed56f1e46bc5055dfaaa6ff9c8e8f1a52337123729e571369cafb792a</hash>
+         <hash>d4300a3ddcb85f2dbbb4c4ed8dd75a3bb399e843dafd594e545052c553216b0b</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/pwm3.c</file>
-         <hash>662d700bc801c21e3a8e069e46c436239e4bf9730adb3a7c043a3dd7646ccf3d</hash>
+         <hash>23104b1596171724e2e68a4b23182c6643867741cb3f04721c19b3d38e74a761</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/pwm4.c</file>
-         <hash>281eb95e3384edec4506a9a8c24b08055008b3017bd29907440d9f7fef3f7e7d</hash>
+         <hash>b1515c6d0151e2c81ae65865d2feab8a86ea6fc9835db08b33a9c14bd4da68c7</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/fvr.c</file>
-         <hash>3d7ea1c47ce9bb37490c0282f65acb8f45909b6178e6efe57318d93855dbd115</hash>
-      </entry>
-      <entry>
-         <file>mcc_generated_files/pin_manager.h</file>
-         <hash>a5c7a82937af91fe74eb42c87c7234c9539b8648801a68d0b30038c2d444432a</hash>
+         <hash>a4d1f92541b741a557e0cb2f94d0248a06f4d985ff90f6c2d6b1483deba470a6</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr0.c</file>
-         <hash>095dea97971467183fdc13349638d9eaaa96ab2bace10646cd228b52210e3cfd</hash>
+         <hash>03191814ad368607368430967cc36573be3f05e1c02a2336b4e9f90310c053ec</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files/memory.h</file>
-         <hash>773b024d7a867bcb8855d52c84f4ba28a6b9ca779f4400dfbf5a277a8a9c6330</hash>
-      </entry>
-      <entry>
-         <file>mcc_generated_files/i2c_master.h</file>
-         <hash>a92973fcc35424dac6990ce2f4471069163aa941a8cf32410fb37e9bd7faf86f</hash>
+         <file>mcc_generated_files/pin_manager.h</file>
+         <hash>1d208dcdae88fd774c341bd9df73563b3ca435bd04b8cb0fe5b47bb52f2ed622</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr1.c</file>
-         <hash>2136bb15c5a72a01e3215cc5cd149fe0366a03d273f73c2ac9b868dd2985db30</hash>
+         <hash>33b95f9548095801b4732a3076241a6035a625ee83bd62c44cc449a6830a66f9</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files/memory.c</file>
-         <hash>6eef6ee55b95b2deebec0b8e38779fe60c071e132c343125fecb4cd5148d9804</hash>
+         <file>mcc_generated_files/memory.h</file>
+         <hash>bd2a253ccb95d2a2aa0c0ecc77c4c67f7602185dff3e6a721fc9e4b356b921d9</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files/i2c_master.h</file>
+         <hash>1c2f4c7ad285fa71f869f88a3f762eb711443e5469bf37f835d5fa11bb7ceeab</hash>
       </entry>
       <entry>
          <file>main.c</file>
-         <hash>0a9a854d30f663ce291042b8261ab7bc7c36d8188d5de70caa159e20f4b21b51</hash>
+         <hash>0baea9af2c856c35162cc0bebf1adf30f4ca4c7c458431914e061be217b186e7</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files/memory.c</file>
+         <hash>94cee33a0c988980649647881f00ead9e1fa5285fd9ed6fc70125ed6c25fe0c7</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr1.h</file>
-         <hash>93c87236f75c3d272429efb0b5504510db2386c19bc7ebed215665003b08e893</hash>
+         <hash>9cf4727a9a80135c9eab60cc51a8c8b4ec08e79f6ccbd0d1ee4494412d3f00ce</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr2.h</file>
-         <hash>27d9369f952399eb819f9e1c947da831d570c56c233076b2361fbc1d31455852</hash>
+         <hash>953613a0c20f88e2f932c348ac0722ffec5a0dfc1b65da8e5a4f500d624e32de</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr3.h</file>
-         <hash>4383a16dfac59c5b1e3f3041ef52194b24e82391402c2b674eb27a92b2b379b3</hash>
+         <hash>08c1ccc614e6bde691fa02ad16ce82a3d34edfa6da230f2e83fe7572f5717d8e</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr4.h</file>
-         <hash>f088a02f6bed16d076870a0f0c1f9f1cfc3c3fd4a4930fc2b25128f66c28bf94</hash>
+         <hash>31b7f5996f5796fca48abb5657051f604837399adf8c70f7ce02efe7b104f30b</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr2.c</file>
-         <hash>f2eabe4664be6bccac8306439f1d760d7d98282d63115570fa1420a382b95518</hash>
+         <hash>0af66bbb36746e51d66407b40ed2c7b40b3f87e522092bcec18c28ce0c555a6e</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr3.c</file>
-         <hash>cdef83434092b88528eaeb44d8508fc9d9a1946c241386b02c23af7245c57151</hash>
+         <hash>d313aa98ecd1f1a5e8d718ac642adf0944bd1a6cbf9ac02a0b4ea7b6890f3e10</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr4.c</file>
-         <hash>a8a66efc2fce80718f63ed42dd9e379f3051d5e47335f121151fe9284a52bf3c</hash>
+         <hash>d364c1a35ecb54e204c21c23e9621ecc855ed148c49c2ee930e7b0a993f29978</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/i2c_master.c</file>
-         <hash>157e009acd42073a22837fd1d8449126d1709bcc8331f019c599c614aaf7ce09</hash>
+         <hash>74f54dcc427b7ee4328f2f546cdcc18f7da79df083d74703acd1358953d0eb13</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files/tmr5.c</file>
+         <hash>8803a8c99ca59614685a78ccd97c65addf373b9efcfd6ba3adbee090bb9c8339</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/tmr0.h</file>
-         <hash>9ddddfad0d6ae9548b8de606eb773fcb731590ade48a8a1b38a16cfc33a2190f</hash>
+         <hash>2ed4118ca62d47634a29bb3d151ca785bf2c42712e249c944f229cd2be61f425</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/device_config.h</file>
-         <hash>a7704a5b8e9c7636e6deb361a0942ec1f6f272b5f385ac36f51c5d1c87c94247</hash>
+         <hash>87f2f04121a7a19f17fa0d51f057ecac81547cd118038eefa104d1095d25defe</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files/tmr5.h</file>
+         <hash>0915951c88e408278c412b6304f2962f7995f89ef35dd90cc6d12e7a957b9609</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/adc.c</file>
-         <hash>b5144e9f1babef8d893bfdc4a63a43828cf6d6b63dd835a78788c73bad1b76e0</hash>
+         <hash>8abd72e34e30b73b0a0ddfcd32e5444cdda5b6e264525473d75b86e52b3b94fa</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/examples/i2c_master_example.h</file>
-         <hash>169afc697e7dcbfe080252a3b52fa52c8ceaa5e00fa68897100802e21d6d1523</hash>
+         <hash>bc9559d4bd848ae38ee8ab6fba7aaedeecdb12d776cb03f0bd9b1ab5a3e0d02c</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/device_config.c</file>
-         <hash>87043d40123a0cd7fc92d426072b57d364f80d0bc2f40e8f0a25fdcf454dee7f</hash>
+         <hash>849a384334459b6fb4ea75f7d8bb1b8e61f1f53a32d90d28f209b5e2128956b4</hash>
       </entry>
       <entry>
          <file>mcc_generated_files/examples/i2c_master_example.c</file>
-         <hash>cf90011d801c5184b7f89162cc37ab5a397816c76ae9a59b3e24875235dcf287</hash>
+         <hash>9321390635bc8a3de676e301b7d2daa9f78a57849e41aeb253f844d0c0ed2961</hash>
       </entry>
    </generatedFileHashHistoryMap>
 </config>
