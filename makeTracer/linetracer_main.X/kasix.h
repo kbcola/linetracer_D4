@@ -36,8 +36,12 @@ extern "C" {
     void kasixStandardTrace(void);
 
     void kasixProportionalTrace(void);
-    
+
     void kasixProportionalTraceOneside(void);
+
+    void kasixLaneChange(void);
+
+    void kasixSuperCurve(void);
 
     void kasixMotorTester(void);
 

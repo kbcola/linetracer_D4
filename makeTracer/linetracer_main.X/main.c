@@ -76,6 +76,7 @@ void main(void) {
     kasixSensorDThrControl();
     //    kasixStandardTrace();
     kasixProportionalTraceOneside();
+    kasixLaneChange();
 
     //    kasixMotorTester();
 }
