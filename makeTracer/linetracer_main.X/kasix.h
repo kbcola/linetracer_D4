@@ -32,6 +32,8 @@ extern "C" {
     void kasixSensorThrControl(void);
 
     void kasixSensorDThrControl(void);
+    
+    void kasixTraceReady(void);
 
     void kasixStandardTrace(void);
 
