@@ -29,24 +29,11 @@ extern "C" {
 
     void kasixInitialize(void);
 
-    void kasixSensorThrControl(void);
+    void kasixCalibration(void);
 
-    void kasixSensorDThrControl(void);
-    
-    void kasixTraceReady(void);
+    void kasixCalibrationCheck(void);
 
-    void kasixStandardTrace(void);
-
-    void kasixProportionalTrace(void);
-
-    void kasixProportionalTraceOneside(void);
-
-    void kasixLaneChange(void);
-
-    void kasixSuperCurve(void);
-
-    void kasixMotorTester(void);
-
+    void kasixTestSensor(bool digAnn, uint8_t port);
 
 #ifdef	__cplusplus
 }
