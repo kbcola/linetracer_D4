@@ -70,16 +70,22 @@ void main(void) {
     // Disable the Peripheral Interrupts
     //INTERRUPT_PeripheralInterruptDisable();
 
-    kasixInitialize();
+    //    kasixInitialize();
+    //
+    //    kasixCalibration();
+    //
+    //    kasixCalibrationCheck();
 
-    kasixSensorThrControl();
-    kasixSensorDThrControl();
-    //    kasixStandardTrace();
-    kasixTraceReady();
-    kasixProportionalTraceOneside();
-    kasixLaneChange();
-    kasixSuperCurve();
-    kasixProportionalTraceOneside();
+    while (1) {
+        kasixTestSensor(false, 0);
+        __delay_ms(1000);
+        kasixTestSensor(false, 1);
+        __delay_ms(1000);
+        kasixTestSensor(false, 2);
+        __delay_ms(1000);
+        kasixTestSensor(false, 3);
+        __delay_ms(1000);
+    }
 
     //    kasixMotorTester();
 }
