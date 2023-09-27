@@ -72,16 +72,20 @@ void main(void) {
 
     kasixInitialize();
 
-    kasixSensorThrControl();
-    kasixSensorDThrControl();
-    //    kasixStandardTrace();
-    kasixTraceReady();
-    kasixProportionalTraceOneside();
-    kasixLaneChange();
-    kasixSuperCurve();
-    kasixProportionalTraceOneside();
+    //    kasixMemoryTest();
+    kasixCalibration();
+
+    kasixReadyTraceRside();
+    kasixProportionalTraceOnesideRside();
+    //    kasixLaneChange();
+    //    kasixSuperCurve();
+    //    kasixProportionalTraceOneside();
 
     //    kasixMotorTester();
+
+    while (1) {
+
+    }
 }
 /**
  End of File

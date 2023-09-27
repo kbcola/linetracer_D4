@@ -32,8 +32,12 @@ extern "C" {
     void kasixSensorThrControl(void);
 
     void kasixSensorDThrControl(void);
-    
-    void kasixTraceReady(void);
+
+    void kasixCalibration(void);
+
+    void kasixReadyTrace(void);
+
+    void kasixReadyTraceRside(void);
 
     void kasixStandardTrace(void);
 
@@ -41,11 +45,15 @@ extern "C" {
 
     void kasixProportionalTraceOneside(void);
 
+    void kasixProportionalTraceOnesideRside(void);
+
     void kasixLaneChange(void);
 
     void kasixSuperCurve(void);
 
     void kasixMotorTester(void);
+
+    void kasixMemoryTest(void);
 
 
 #ifdef	__cplusplus
