@@ -71,7 +71,7 @@ void kasixDisplaySensors(void) {
     return;
 }
 
-uint16_t kasixSH1 = 512 << 6, kasixSH2 = 512 << 6, kasixSL1 = 12 << 6, kasixSL2 = 12 << 6;
+uint16_t kasixSH1 = 480 << 6, kasixSH2 = 480 << 6, kasixSL1 = 32 << 6, kasixSL2 = 32 << 6;
 
 void kasixSensorThrControl(void) {
     TMR1_SetInterruptHandler(kasixDisplaySensors);
@@ -368,7 +368,7 @@ void kasixBacktoTrace(void) {
     return;
 }
 
-#define KASIX_MAXTRACE 31
+#define KASIX_MAXTRACE 47
 #define KASIX_TRACE1 3
 #define KASIX_TRACE2 7
 #define KASIX_TRACE3 11
@@ -424,9 +424,9 @@ void kasixStandardTrace(void) {
     }
 }
 
-#define KASIX_PT_GAIN 42.0
+#define KASIX_PT_GAIN 56.0
 #define KASIX_S1_AMPL 1.0
-#define KASIX_S2_AMPL 1.4
+#define KASIX_S2_AMPL 1.2
 
 void kasixProportionalTrace(void) {
     uint16_t kasixSRVal1, kasixSRVal2;
@@ -461,7 +461,10 @@ void kasixProportionalTrace(void) {
 }
 
 #define KASIX_PTOB_CEIL KASIX_MAXTRACE
-#define KASIX_PTOB_THR 0xcff
+#define KASIX_PTOB_THR 0x6ff
+#define KASIX_PTOB_INR 0x04+
+
+#define KASIX_PTOB_DCR 0x04
 #define KASIX_SIGNAL_THR 0x1cee
 
 uint16_t kasixSignalDetect = 0;
@@ -507,13 +510,13 @@ void kasixProportionalTraceOneside(void) {
         PWM4_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE + kasixPTControlVal))));
         anmLine((uint16_t) (kasixPVal*-4.0), true);
         if (digitalScanP(0)) {
-            kasixSignalDetect++;
+            kasixSignalDetect += KASIX_PTOB_INR;
             if (kasixSignalDetect > KASIX_SIGNAL_THR) {
                 flipDL();
             }
         } else {
             if (kasixSignalDetect) kasixSignalDetect = 1;
-            kasixSignalDetect--;
+            kasixSignalDetect -= KASIX_PTOB_DCR;
         }
     }
     return;
