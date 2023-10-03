@@ -368,7 +368,7 @@ void kasixBacktoTrace(void) {
     return;
 }
 
-#define KASIX_MAXTRACE 47
+#define KASIX_MAXTRACE 24
 #define KASIX_TRACE1 3
 #define KASIX_TRACE2 7
 #define KASIX_TRACE3 11
@@ -424,7 +424,7 @@ void kasixStandardTrace(void) {
     }
 }
 
-#define KASIX_PT_GAIN 56.0
+#define KASIX_PT_GAIN 48.0
 #define KASIX_S1_AMPL 1.0
 #define KASIX_S2_AMPL 1.2
 
@@ -461,11 +461,11 @@ void kasixProportionalTrace(void) {
 }
 
 #define KASIX_PTOB_CEIL KASIX_MAXTRACE
-#define KASIX_PTOB_THR 0x6ff
-#define KASIX_PTOB_INR 0x04+
-
-#define KASIX_PTOB_DCR 0x04
-#define KASIX_SIGNAL_THR 0x1cee
+#define KASIX_PTOB_THR 0xeff
+#define KASIX_PTOB_INR 0x07
+#define KASIX_BIAS_LOW 64
+#define KASIX_PTOB_DCR 0x01
+#define KASIX_SIGNAL_THR 0x01
 
 uint16_t kasixSignalDetect = 0;
 
@@ -512,13 +512,21 @@ void kasixProportionalTraceOneside(void) {
         if (digitalScanP(0)) {
             kasixSignalDetect += KASIX_PTOB_INR;
             if (kasixSignalDetect > KASIX_SIGNAL_THR) {
-                flipDL();
+                while (1) {
+                    anmRot(0x3456, 0x1a2c);
+                }
             }
         } else {
             if (kasixSignalDetect) kasixSignalDetect = 1;
             kasixSignalDetect -= KASIX_PTOB_DCR;
         }
     }
+    return;
+}
+
+void kasixGoLaneChange(void) {
+    kasixPhase1 = true;
+
     return;
 }
 
@@ -558,11 +566,15 @@ void kasixProportionalTraceOnesideRside(void) {
         PWM3_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE + kasixPTControlVal))));
         PWM4_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE - kasixPTControlVal - kasixPTOBonus))));
         anmLine((uint16_t) (kasixPVal*-4.0), true);
+        //        if (analogScanP(0) >= kasixSH1 - KASIX_BIAS_LOW && analogScanP(1) >= kasixSH2 - KASIX_BIAS_LOW) {
+        changeDigitalThr(kasixSDThr[0]);
         if (digitalScanP(0)) {
-            kasixSignalDetect++;
-            if (kasixSignalDetect > KASIX_SIGNAL_THR) {
-                flipDL();
-            }
+            return;
+            //            kasixSignalDetect++;
+            //            if (kasixSignalDetect > KASIX_SIGNAL_THR) {
+            //                return;
+            //                //                TMR5_SetInterruptHandler(kasixGoLaneChange); // 500ms
+            //            }
         } else {
             if (kasixSignalDetect) kasixSignalDetect = 1;
             kasixSignalDetect--;
@@ -573,12 +585,6 @@ void kasixProportionalTraceOnesideRside(void) {
 
 bool kasixLaneChangeFlag = false, kasixFinder = false;
 
-void kasixGoLaneChange(void) {
-    kasixLaneChangeFlag = true;
-
-    return;
-}
-
 void kasixEnableFind(void) {
     kasixFinder = true;
 
@@ -586,87 +592,18 @@ void kasixEnableFind(void) {
 }
 
 void kasixLaneChange(void) {
-    TMR5_SetInterruptHandler(kasixGoLaneChange); // 500ms
-    uint16_t kasixSRVal;
-    uint16_t kasixSRWidth;
-    kasixSRWidth = kasixSH1 - kasixSL1;
-    double kasixPVal;
-    while (!kasixLaneChangeFlag) {
-        kasixPTOBThr++;
-        if (kasixPTOBThr > KASIX_PTOB_THR) {
-            kasixPTOBonus++;
-            kasixPTOBThr = 0;
-            onR();
-        }
-        if (kasixPTOBonus > KASIX_PTOB_CEIL) {
-            kasixPTOBonus = KASIX_PTOB_CEIL;
-        }
-        kasixSRVal = analogScanP(0);
-        // 1. ZERO align
-        if (kasixSRVal < kasixSL1)kasixSRVal = kasixSL1; // floor
-        kasixSRVal -= kasixSL1;
-        // 2. WIDTH align
-        kasixPVal = (double) kasixSRVal / (double) kasixSRWidth;
-        // 3. feedback control
-        int16_t kasixPTControlVal = (uint16_t) ((double) (kasixPVal - 0.5) * KASIX_PT_GAIN);
-
-        if (kasixPTControlVal < -0.2) {
-            if (kasixPTOBonus != 0) {
-                kasixPTOBonus--;
-            }
-            kasixPTOBThr = 0;
-            onG();
-        }
-
-        PWM3_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE - kasixPTControlVal - kasixPTOBonus))));
-        PWM4_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE + kasixPTControlVal))));
-        anmLine((uint16_t) (kasixPVal*-4.0), true);
-    }
     anmRot(0b0011001100110011, ~0b0011001100110011);
     PWM3_LoadDutyValue(KASIX_MAXTRACE);
     PWM4_LoadDutyValue(0);
     __delay_ms(300);
     kasixFinder = false;
+    TMR5_Reload();
     TMR5_SetInterruptHandler(kasixEnableFind);
-    while ((digitalScanP(1) || digitalScanP(3)) && kasixFinder) {
+    while (!(analogScanP(1) < (kasixSL1 + KASIX_BIAS_LOW)) && !kasixFinder) {
         PWM3_LoadDutyValue(KASIX_MAXTRACE);
-        PWM4_LoadDutyValue(KASIX_MAXTRACE - 5);
+        PWM4_LoadDutyValue(KASIX_MAXTRACE);
     }
-
-    kasixSRWidth = kasixSH2 - kasixSL2;
-    while (!kasixPhase2) {
-        kasixPTOBThr++;
-        if (kasixPTOBThr > KASIX_PTOB_THR) {
-            kasixPTOBonus++;
-            kasixPTOBThr = 0;
-            onR();
-        }
-        if (kasixPTOBonus > KASIX_PTOB_CEIL) {
-            kasixPTOBonus = KASIX_PTOB_CEIL;
-        }
-        kasixSRVal = analogScanP(0);
-        // 1. ZERO align
-        if (kasixSRVal < kasixSL1)kasixSRVal = kasixSL1; // floor
-        kasixSRVal -= kasixSL1;
-        // 2. WIDTH align
-        kasixPVal = (double) kasixSRVal / (double) kasixSRWidth;
-        // 3. feedback control
-        int16_t kasixPTControlVal = (uint16_t) ((double) (kasixPVal - 0.5) * KASIX_PT_GAIN);
-
-        if (kasixPTControlVal < -0.2) {
-            if (kasixPTOBonus != 0) {
-
-                kasixPTOBonus--;
-            }
-            kasixPTOBThr = 0;
-            onG();
-        }
-
-        PWM3_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE - kasixPTControlVal - kasixPTOBonus))));
-        PWM4_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE + kasixPTControlVal))));
-        anmLine((uint16_t) (kasixPVal*-4.0), true);
-        kasixPhase2 = digitalScanP(0);
-    }
+    return;
 }
 
 #define KASIX_SUPERCURVE_CURVER 4
@@ -680,41 +617,10 @@ void kasixSuperCurve(void) {
     kasixSRWidth = kasixSH1 - kasixSL1;
     double kasixPVal;
 
-    while ((digitalScanP(1) || digitalScanP(3)) && kasixFinder) {
-        kasixPTOBThr++;
-        if (kasixPTOBThr > KASIX_PTOB_THR) {
-            kasixPTOBonus++;
-            kasixPTOBThr = 0;
-            onR();
-        }
-        if (kasixPTOBonus > KASIX_PTOB_CEIL) {
-            kasixPTOBonus = KASIX_PTOB_CEIL;
-        }
-        kasixSRVal = analogScanP(0);
-        // 1. ZERO align
-        if (kasixSRVal < kasixSL1)kasixSRVal = kasixSL1; // floor
-        kasixSRVal -= kasixSL1;
-        // 2. WIDTH align
-        kasixPVal = (double) kasixSRVal / (double) kasixSRWidth;
-        // 3. feedback control
-        int16_t kasixPTControlVal = (uint16_t) ((double) (kasixPVal - 0.5) * KASIX_PT_GAIN);
-
-        if (kasixPTControlVal < -0.2) {
-            if (kasixPTOBonus != 0) {
-                kasixPTOBonus--;
-            }
-            kasixPTOBThr = 0;
-            onG();
-        }
-
-        PWM3_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE - kasixPTControlVal - kasixPTOBonus))));
-        PWM4_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE + kasixPTControlVal))));
-        anmLine((uint16_t) (kasixPVal*-4.0), true);
-        kasixPhase2 = digitalScanP(0);
+    while ((analogScanP(1) < kasixSL1 + KASIX_BIAS_LOW) && kasixFinder) {
+        PWM3_LoadDutyValue(KASIX_SUPERCURVE_CURVER);
+        PWM3_LoadDutyValue(KASIX_MAXTRACE);
     }
-    PWM3_LoadDutyValue(KASIX_SUPERCURVE_CURVER);
-    PWM3_LoadDutyValue(KASIX_MAXTRACE);
-    __delay_ms(KASIX_SUPERCURVE_TIMEMS);
 
     return;
 }

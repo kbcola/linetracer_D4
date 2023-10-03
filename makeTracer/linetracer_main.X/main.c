@@ -77,15 +77,13 @@ void main(void) {
 
     kasixReadyTraceRside();
     kasixProportionalTraceOnesideRside();
-    //    kasixLaneChange();
+    kasixLaneChange();
+    //    kasixProportionalTraceOnesideRside();
     //    kasixSuperCurve();
     //    kasixProportionalTraceOneside();
 
     //    kasixMotorTester();
 
-    while (1) {
-
-    }
 }
 /**
  End of File

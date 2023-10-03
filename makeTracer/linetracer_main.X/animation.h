@@ -17,7 +17,7 @@
 extern "C" {
 #endif
 
-#define ROTATION_TIME 144
+#define ROTATION_TIME 16
 
     void anmLine(signed int bData, bool RG);
 

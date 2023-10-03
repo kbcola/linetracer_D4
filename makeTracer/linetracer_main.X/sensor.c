@@ -18,7 +18,7 @@ bool sensorSelector(sensorPortNum spn) {
     SENS_SEL1_PORT = spn >> 1; // Upper bit
     SENS_SEL2_PORT = spn % 2; // Lower bit
     spnSave = spn;
-    __delay_ms(1); // MUX Wait time
+    __delay_us(500); // MUX Wait time
     return 0;
 }
 
@@ -36,25 +36,25 @@ dscanResult digitalScan(void) {
 ascanResult analogScanP(sensorPortNum spn) {
     SENS_SEL1_PORT = spn >> 1; // Upper bit
     SENS_SEL2_PORT = spn % 2; // Lower bit
-    __delay_ms(1); // MUX Wait time
+    __delay_us(500); // MUX Wait time
     ADC_StartConversion();
     while (!ADC_IsConversionDone()) {
     } // wait
     ascanResult res = ADC_GetConversionResult();
     SENS_SEL1_PORT = spnSave >> 1; // Upper bit
     SENS_SEL2_PORT = spnSave % 2; // Lower bit
-    __delay_ms(1); // MUX Wait time
+    __delay_us(500); // MUX Wait time
     return res;
 }
 
 dscanResult digitalScanP(sensorPortNum spn) {
     SENS_SEL1_PORT = spn >> 1; // Upper bit
     SENS_SEL2_PORT = spn % 2; // Lower bit
-    __delay_ms(1); // MUX Wait time
+    __delay_us(500); // MUX Wait time
     dscanResult res = CMP1_GetOutputStatus();
     SENS_SEL1_PORT = spnSave >> 1; // Upper bit
     SENS_SEL2_PORT = spnSave % 2; // Lower bit
-    __delay_ms(1); // MUX Wait time
+    __delay_us(500); // MUX Wait time
     return res;
 }
 
@@ -69,10 +69,10 @@ bool checkDigitalThr(uint16_t thr, sensorPortNum spn) {
     DAC1_Load10bitInputData(thr);
     SENS_SEL1_PORT = spn >> 1; // Upper bit
     SENS_SEL2_PORT = spn % 2; // Lower bit
-    __delay_ms(1); // MUX Wait time
+    __delay_us(500); // MUX Wait time
     dscanResult res = CMP1_GetOutputStatus();
     SENS_SEL1_PORT = spnSave >> 1; // Upper bit
     SENS_SEL2_PORT = spnSave % 2; // Lower bit
-    __delay_ms(1); // MUX Wait time
+    __delay_us(500); // MUX Wait time
     return res;
 }
