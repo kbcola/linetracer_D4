@@ -55,6 +55,7 @@ extern "C" {
 
     void kasixMemoryTest(void);
 
+    void kasixSensorDTest(void);
 
 #ifdef	__cplusplus
 }

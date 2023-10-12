@@ -68,11 +68,11 @@ void TMR5_Initialize(void)
     //GSS T5G_pin; TMR5GE disabled; T5GTM disabled; T5GPOL low; T5GGO_nDONE done; T5GSPM disabled; 
     T5GCON = 0x00;
 
-    //TMR 60; 
-    TMR5H = 0x3C;
+    //TMR 158; 
+    TMR5H = 0x9E;
 
-    //TMR 176; 
-    TMR5L = 0xB0;
+    //TMR 88; 
+    TMR5L = 0x58;
 
     // Clearing IF flag before enabling the interrupt.
     PIR4bits.TMR5IF = 0;
@@ -86,8 +86,8 @@ void TMR5_Initialize(void)
     // Set Default Interrupt Handler
     TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
 
-    // CKPS 1:1; T5OSCEN disabled; nT5SYNC synchronize; CS FOSC/4; TMR5ON enabled; 
-    T5CON = 0x01;
+    // CKPS 1:8; T5OSCEN disabled; nT5SYNC synchronize; CS FOSC/4; TMR5ON enabled; 
+    T5CON = 0x31;
 }
 
 void TMR5_StartTimer(void)

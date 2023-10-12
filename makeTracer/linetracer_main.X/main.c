@@ -78,6 +78,10 @@ void main(void) {
     kasixReadyTraceRside();
     kasixProportionalTraceOnesideRside();
     kasixLaneChange();
+    kasixProportionalTraceOnesideRside();
+    kasixSuperCurve();
+    kasixProportionalTraceOnesideRside();
+    //    kasixSensorDTest();
     //    kasixProportionalTraceOnesideRside();
     //    kasixSuperCurve();
     //    kasixProportionalTraceOneside();

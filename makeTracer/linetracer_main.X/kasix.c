@@ -460,10 +460,10 @@ void kasixProportionalTrace(void) {
     }
 }
 
-#define KASIX_PTOB_CEIL KASIX_MAXTRACE
-#define KASIX_PTOB_THR 0xeff
-#define KASIX_PTOB_INR 0x07
-#define KASIX_BIAS_LOW 64
+#define KASIX_PTOB_CEIL KASIX_MAXTRACE - 1
+#define KASIX_PTOB_THR 0x4f
+#define KASIX_PTOB_INR 0x01
+#define KASIX_BIAS_LOW 32
 #define KASIX_PTOB_DCR 0x01
 #define KASIX_SIGNAL_THR 0x01
 
@@ -565,7 +565,7 @@ void kasixProportionalTraceOnesideRside(void) {
 
         PWM3_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE + kasixPTControlVal))));
         PWM4_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE - kasixPTControlVal - kasixPTOBonus))));
-        anmLine((uint16_t) (kasixPVal*-4.0), true);
+        anmLine(((uint16_t) (8.0 * (double) kasixSRVal / (double) (kasixSH1 - kasixSL1)) - 4), true);
         //        if (analogScanP(0) >= kasixSH1 - KASIX_BIAS_LOW && analogScanP(1) >= kasixSH2 - KASIX_BIAS_LOW) {
         changeDigitalThr(kasixSDThr[0]);
         if (digitalScanP(0)) {
@@ -585,8 +585,15 @@ void kasixProportionalTraceOnesideRside(void) {
 
 bool kasixLaneChangeFlag = false, kasixFinder = false;
 
+volatile uint16_t detectedTimes = 0;
+
 void kasixEnableFind(void) {
-    kasixFinder = true;
+    detectedTimes++;
+    if (detectedTimes >= 5) {
+        detectedTimes = 0;
+        kasixFinder = true;
+    }
+    TMR5_SetInterruptHandler(NULL);
 
     return;
 }
@@ -595,32 +602,83 @@ void kasixLaneChange(void) {
     anmRot(0b0011001100110011, ~0b0011001100110011);
     PWM3_LoadDutyValue(KASIX_MAXTRACE);
     PWM4_LoadDutyValue(0);
-    __delay_ms(300);
+    __delay_ms(360);
     kasixFinder = false;
     TMR5_Reload();
     TMR5_SetInterruptHandler(kasixEnableFind);
-    while (!(analogScanP(1) < (kasixSL1 + KASIX_BIAS_LOW)) && !kasixFinder) {
+
+    PWM3_LoadDutyValue(KASIX_MAXTRACE);
+    PWM4_LoadDutyValue(KASIX_MAXTRACE);
+    __delay_ms(200);
+    while (!(digitalScanP(1) && true /* kasixFinder */)) {
         PWM3_LoadDutyValue(KASIX_MAXTRACE);
         PWM4_LoadDutyValue(KASIX_MAXTRACE);
     }
     return;
 }
 
-#define KASIX_SUPERCURVE_CURVER 4
+#define KASIX_SUPERCURVE_CURVER 0
 #define KASIX_SUPERCURVE_TIMEMS 500
 
 void kasixSuperCurve(void) {
-    kasixFinder = false;
-    TMR5_SetInterruptHandler(kasixEnableFind); // 500ms
     uint16_t kasixSRVal;
     uint16_t kasixSRWidth;
-    kasixSRWidth = kasixSH1 - kasixSL1;
+    kasixSignalDetect = 0;
+    kasixSRWidth = kasixSH2 - kasixSL2;
     double kasixPVal;
+    PWM3_LoadDutyValue(KASIX_MAXTRACE);
+    PWM4_LoadDutyValue(KASIX_MAXTRACE);
+    __delay_ms(1000);
+    //    while (!kasixPhase1) {
+    //        kasixPTOBThr++;
+    //        if (kasixPTOBThr > KASIX_PTOB_THR) {
+    //            kasixPTOBonus++;
+    //            kasixPTOBThr = 0;
+    //            onR();
+    //        }
+    //        if (kasixPTOBonus > KASIX_PTOB_CEIL) {
+    //            kasixPTOBonus = KASIX_PTOB_CEIL;
+    //        }
+    //        kasixSRVal = analogScanP(1);
+    //        // 1. ZERO align
+    //        if (kasixSRVal < kasixSL1)kasixSRVal = kasixSL1; // floor
+    //        kasixSRVal -= kasixSL2;
+    //        // 2. WIDTH align
+    //        kasixPVal = (double) kasixSRVal / (double) kasixSRWidth;
+    //        // 3. feedback control
+    //        int16_t kasixPTControlVal = (uint16_t) ((double) (kasixPVal - 0.5) * KASIX_PT_GAIN);
+    //
+    //        if (kasixPTControlVal < -0.2) {
+    //            if (kasixPTOBonus != 0) {
+    //                kasixPTOBonus--;
+    //            }
+    //            kasixPTOBThr = 0;
+    //            onG();
+    //        }
+    //
+    //        PWM3_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE + kasixPTControlVal))));
+    //        PWM4_LoadDutyValue(((int16_t) __MIN(KASIX_MAXTRACE, __MAX(0, KASIX_MAXTRACE - kasixPTControlVal - kasixPTOBonus))));
+    //        anmLine((uint16_t) (kasixPVal*-4.0), true);
+    //        //        if (analogScanP(0) >= kasixSH1 - KASIX_BIAS_LOW && analogScanP(1) >= kasixSH2 - KASIX_BIAS_LOW) {
+    //        changeDigitalThr(kasixSDThr[3]);
+    //        if (digitalScanP(3)) {
+    //            break;
+    //            //            kasixSignalDetect++;
+    //            //            if (kasixSignalDetect > KASIX_SIGNAL_THR) {
+    //            //                return;
+    //            //                //                TMR5_SetInterruptHandler(kasixGoLaneChange); // 500ms
+    //            //            }
+    //        } else {
+    //            if (kasixSignalDetect) kasixSignalDetect = 1;
+    //            kasixSignalDetect--;
+    //        }
+    //    }
+    kasixFinder = false;
+    TMR5_SetInterruptHandler(kasixEnableFind); // 500ms
 
-    while ((analogScanP(1) < kasixSL1 + KASIX_BIAS_LOW) && kasixFinder) {
-        PWM3_LoadDutyValue(KASIX_SUPERCURVE_CURVER);
-        PWM3_LoadDutyValue(KASIX_MAXTRACE);
-    }
+    PWM3_LoadDutyValue(KASIX_SUPERCURVE_CURVER);
+    PWM4_LoadDutyValue(KASIX_MAXTRACE);
+    __delay_ms(1000);
 
     return;
 }
@@ -676,4 +734,15 @@ void kasixMemoryTest(void) {
         kasixMemAddr %= 128;
     }
     return;
+}
+
+void kasixSensorDTest(void) {
+    changeDigitalThr(kasixSDThr[3]);
+    while (1) {
+        if (digitalScanP(3)) {
+            tone(1234);
+            __delay_ms(1000);
+            noTone();
+        }
+    }
 }
