@@ -177,7 +177,7 @@
   \item FVRをADCの基準電圧とすることで微小な信号でも分解能を極端に下げることなく検出できる
   \item FVRを基準電圧としたDACを用いてコンパレータの閾値調整ができる
   \item 制御時の白と黒の値を事前に登録し、最適な制御を行うようにすることができる
-  \item 登録した白と黒の値が間違っていたら警告される
+  \item 登録した白と黒の値が間違っていたら(数値の関係が反対になっていたら)警告される
 \end{itemize}
 \subsubsection{\kasix システム}
 上記の各モジュールを結合し、統合的に動かせるようにした関数群。main関数を簡素化するために設けた。
@@ -195,16 +195,26 @@
 \subsubsection{メイン基板}
 \begin{itemize}
   \item オシロスコープのデバッグを考慮してピンをつけ足すべきである
+  \item もっとジャンパを減らすべきである
 \end{itemize}
 \subsubsection{センサ基板}
 \begin{itemize}
   \item オシロスコープのデバッグを考慮してピンをつけ足すべきである
   \item 増幅回路を組むべきである
+  \item 全ての素子を同一にして設計すべきである
+  \item 無理のある配線を前提とした設計を見直すべきである
 \end{itemize}
 \subsection{プログラム}
+\subsubsection{総合}
+\begin{itemize}
+  \item 無駄な機能の実装が多い
+  \item 汚いコードが多い
+  \item 割り込みのタイミングをもっとよく考えてタイマ利用の割り当てをすべきである
+\end{itemize}
 以降工事中
 
 \section{制御の考え方}
+\subsection{最初期の比例制御で利用した理論}
 センサ1の最大値を$S_{1H}$、最小値を$S_{1L}$、センサ2の最大値を$S_{2H}$、最小値を$S_{2L}$とする。
 今、センサが読んでいる値はそれぞれ$s_{1},s_{2}$であると仮定する。
 各値幅$W_{n}$はそれぞれ$S_{nH}-S_{nL}$によって定まる。
@@ -226,6 +236,9 @@
   \Delta s = s_2-s_1
 \end{equation}
 を計算し、ゲインをかけて駆動させればハイ完成である。
+
+\subsection{走行会の制御にて利用した理論}
+センサ読み込み値を
 
 \begin{thebibliography}{200}
  \bibitem{ds:picEspI} Microchip, "PIC16(L)F1777/8/9", p.540 "ELECTRICAL SPECIFICATIONS: Absolute Maximum Ratings" \\ \url{https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/PIC16%28L%29F1777_8_9_Family_Data_Sheet_40001819D.pdf} \\ (閲覧日: 2023年9月9日)

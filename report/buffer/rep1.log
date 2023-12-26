@@ -1,14 +1,14 @@
-This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Arch Linux)  (format=lualatex 2023.8.25)  24 SEP 2023 23:51
+This is LuaHBTeX, Version 1.17.0 (TeX Live 2023/Arch Linux)  (format=lualatex 2023.12.25)  26 DEC 2023 18:09
  restricted system commands enabled.
-**rep1.tex
+**./rep1.tex
 (./rep1.tex
 LaTeX2e <2022-11-01> patch level 1
 Lua module: luaotfload 2022-10-03 3.23 Lua based OpenType font support
 Lua module: lualibs 2022-10-04 2.75 ConTeXt Lua standard libraries.
 Lua module: lualibs-extended 2022-10-04 2.75 ConTeXt Lua libraries -- extended c
 ollection.
-luaotfload | conf : Root cache directory is "/home/meumeumeucar/.texlive/texmf-v
-ar/luatex-cache/generic/names".
+luaotfload | conf : Root cache directory is "/home/seikin/.texlive/texmf-var/lua
+tex-cache/generic/names".
 luaotfload | init : Loading fontloader "fontloader-2022-10-03.lua" from kpse-res
 olved path "/usr/share/texmf-dist/tex/luatex/luaotfload/fontloader-2022-10-03.lu
 a".
@@ -19,8 +19,8 @@ Inserting `luaotfload.node_processor' in `hpack_filter'.
 Inserting `luaotfload.glyph_stream' in `glyph_stream_provider'.
 Inserting `luaotfload.define_font' in `define_font'.
 Lua-only attribute luaotfload_color_attribute = 2
-luaotfload | conf : Root cache directory is "/home/meumeumeucar/.texlive/texmf-v
-ar/luatex-cache/generic/names".
+luaotfload | conf : Root cache directory is "/home/seikin/.texlive/texmf-var/lua
+tex-cache/generic/names".
 Inserting `luaotfload.harf.strip_prefix' in `find_opentype_file'.
 Inserting `luaotfload.harf.strip_prefix' in `find_truetype_file'.
 Removing  `luaotfload.glyph_stream' from `glyph_stream_provider'.
@@ -308,9 +308,9 @@ LaTeX Info: Redefining \fontshapeforce on input line 955.
 )
 (/usr/share/texmf-dist/tex/luatex/luatexja/patches/lltjdefs.sty
 Package: lltjdefs 2022-01-23 Default font settings of LuaTeX-ja
-luaotfload | db : Font names database loaded from /home/meumeumeucar/.texlive/te
-xmf-var/luatex-cache/generic/names/luaotfload-names.luc.gz(load cache: extra_lmr
-oman10-regular.luc)
+luaotfload | db : Font names database loaded from /home/seikin/.texlive/texmf-va
+r/luatex-cache/generic/names/luaotfload-names.luc.gz(load cache: extra_lmroman10
+-regular.luc)
 LaTeX Font Info:    Font shape `JT3/mc/m/n' will be
 (Font)              scaled to size 9.24713pt on input line 79.
 
@@ -788,9 +788,9 @@ LaTeX Font Info:    Font shape `JY3/gt/m/n' will be
 Package: luatexja-fontspec-27c 2020-04-04 fontspec support of LuaTeX-ja
 \g__ltj_fontspec_altnumber_int=\count335
 ))
-luaotfload | cache : Lookup cache loaded from /home/meumeumeucar/.texlive/texmf-
-var/luatex-cache/generic/names/luaotfload-lookup-cache.luc.(load cache: extra_ti
-mesnewromanpsmt.luc)
+luaotfload | cache : Lookup cache loaded from /home/seikin/.texlive/texmf-var/lu
+atex-cache/generic/names/luaotfload-lookup-cache.luc.(load cache: extra_timesnew
+romanpsmt.luc)
 luaotfload | aux : font no 23 (nil) defines no feature for script latn
 luaotfload | aux : font no 23 (nil) defines no feature for script dflt(load cach
 e: extra_timesnewromanps-bolditalicmt.luc)(load cache: extra_timesnewromanps-bol
@@ -1133,38 +1133,43 @@ LaTeX Font Warning: Font shape `JY3/HaranoAjiGothic-Medium(0)/b/n' undefined
 (Font)              using `JY3/HaranoAjiGothic-Medium(0)/m/n' instead on input 
 line 182.
 
-[2](load cache: extra_lmmono10-regular.luc)
+[2](load cache: extra_lmmono10-regular.luc) [3]
 
 Package caption Warning: Unused \captionsetup[sub] on input line 22.
 See the caption package documentation for explanation.
 
-[3] (./rep1.aux)
+[4] (./rep1.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 )
 
 Here is how much of LuaTeX's memory you used:
- 16690 strings out of 478285
+ 16691 strings out of 478285
  125244,1977958 words of node,token memory allocated
- 1007 words of node memory still in use:
-   10 hlist, 2 vlist, 5 rule, 2 glue, 4 kern, 1 glyph, 179 attribute, 56 glue_sp
-ec, 27 attribute_list, 1 write, 13 user_defined nodes
-   avail lists: 1:10,2:33884,3:489,4:411,5:60,6:66,7:4490,8:146,9:369,10:9,11:56
+ 1151 words of node memory still in use:
+   10 hlist, 2 vlist, 5 rule, 2 glue, 4 kern, 1 glyph, 245 attribute, 56 glue_sp
+ec, 33 attribute_list, 1 write, 13 user_defined nodes
+   avail lists: 1:10,2:33812,3:489,4:411,5:70,6:66,7:4490,8:146,9:403,10:9,11:38
 
  36261 multiletter control sequences out of 65536+600000
  81 fonts using 89594607 bytes
- 118i,5n,115p,1742b,399s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/share/fonts/OTF/lmmono10-regular.otf></usr/share/texmf-dist/fonts/opentype
-/public/haranoaji/HaranoAjiMincho-Bold.otf></usr/share/texmf-dist/fonts/opentype
-/public/haranoaji/HaranoAjiMincho-Regular.otf></usr/share/fonts/TTF/Times.TTF></
-usr/share/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiGothic-Medium.otf>
-</usr/share/fonts/gsfonts/NimbusRoman-Bold.otf></usr/share/fonts/TTF/Timesbd.TTF
->
-Output written on rep1.pdf (3 pages, 164808 bytes).
+ 118i,5n,115p,1744b,399s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texmf-dist/fonts/opentype/public/lm/lmmono10-regular.otf></usr/share
+/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiMincho-Bold.otf></usr/share
+/texmf-dist/fonts/opentype/public/haranoaji/HaranoAjiMincho-Regular.otf></usr/sh
+are/fonts/TTF/times.ttf></usr/share/texmf-dist/fonts/opentype/public/haranoaji/H
+aranoAjiGothic-Medium.otf></usr/share/fonts/gsfonts/NimbusRoman-Bold.otf></usr/s
+hare/fonts/TTF/timesbd.ttf></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></us
+r/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmsy7.pfb>
+Output written on rep1.pdf (4 pages, 216644 bytes).
 
-PDF statistics: 63 PDF objects out of 1000 (max. 8388607)
- 36 compressed objects within 1 object stream
+PDF statistics: 90 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 131072)
  1 words of extra memory for PDF output out of 10000 (max. 100000000)
 
