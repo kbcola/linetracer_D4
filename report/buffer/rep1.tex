@@ -213,6 +213,7 @@
 \end{itemize}
 以降工事中
 
+
 \section{制御の考え方}
 \subsection{最初期の比例制御で利用した理論}
 センサ1の最大値を$S_{1H}$、最小値を$S_{1L}$、センサ2の最大値を$S_{2H}$、最小値を$S_{2L}$とする。
@@ -221,13 +222,13 @@
 
 まず、0に揃える。
 \begin{equation}
-  s^{0|}_{n} = s_n-S_{nL}
+  s^{\to 0}_{n} = s_n-S_{nL}
 \end{equation}
 
 しかし、これでは比較が難しい。そこで、2つの幅を1で揃えてしまおう。
-今の値$s^{0|}_{n}$は最大値の何割を占めているか$(p_n)$はこの式で分かる。
+今の値$s^{\to 0}_{n}$は最大値の何割を占めているか$(p_n)$はこの式で分かる。
 \begin{equation}
-  p_n=\frac{s^{0|}_n}{W_n}
+  p_n=\frac{s^{\to 0}_n}{W_n}
 \end{equation}
 これは幅が1の場合のセンサ値と同等の意味を持つ。(この式の最大値は1なので)
 
@@ -235,10 +236,34 @@
 \begin{equation}
   \Delta s = s_2-s_1
 \end{equation}
-を計算し、ゲインをかけて駆動させればハイ完成である。
+を計算し、ゲインをかけて駆動させる。
 
 \subsection{走行会の制御にて利用した理論}
-センサ読み込み値を
+右側センサの最大値を$S_{1H}$、最小値を$S_{1L}$とする。
+今、センサが読んでいる値は$s_{1}$であると仮定する。
+幅$W$は$S_{1H}-S_{1L}$によって定まる。
+
+まず、0に揃える。
+\begin{equation}
+  s^{\to 0}_{1} = s_1-S_{1L}
+\end{equation}
+
+しかし、これでは比較が難しい。そこで、幅を1で揃えてしまおう。
+今の値$s^{\to 0}_{1}$は最大値の何割を占めているか$(p_1)$はこの式で分かる。
+\begin{equation}
+  p_1=\frac{s^{\to 0}_1}{W_1}
+\end{equation}
+これは幅が1の場合のセンサ値と同等の意味を持つ。(この式の最大値は1なので)
+
+曲がるときを考える。
+今回のコースは左に曲がるカーブが多い。そのため、左に曲がりやすい制御にする必要がある。
+センサが右側を捉えている(つまり、センサ値が白側に寄っている)場合、これは右に逸れていることでるから、
+早急に左に戻す必要がある。
+
+ループ回数を$n$とし、1ループ毎の経過時間を$\Delta t_l$とする。また、判断待機時間を$T_w$とする。
+$n \times t_l > T_w$の条件中にずっとセンサ値が白を読み続けた場合、
+左ステアリングを強化させる効果を起こすようにした。
+具体的には左モータの動きを鈍らせるように減算処理をしている。
 
 \begin{thebibliography}{200}
  \bibitem{ds:picEspI} Microchip, "PIC16(L)F1777/8/9", p.540 "ELECTRICAL SPECIFICATIONS: Absolute Maximum Ratings" \\ \url{https://ww1.microchip.com/downloads/aemDocuments/documents/MCU08/ProductDocuments/DataSheets/PIC16%28L%29F1777_8_9_Family_Data_Sheet_40001819D.pdf} \\ (閲覧日: 2023年9月9日)
